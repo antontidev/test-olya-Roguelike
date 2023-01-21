@@ -10,16 +10,19 @@ namespace Services {
 
         public CardsFactoryConfig CardsFactoryConfig;
         public CardsImagesConfig CardsImagesConfig;
+
+        public Transform CardsRoot;
+        public CanvasGroup CardsRootCanvasGroup;
         
         private CardsFactory _cardsFactory;
 
         private void Awake() {
-            _cardsFactory = new CardsFactory(CardsFactoryConfig, transform);
+            _cardsFactory = new CardsFactory(CardsFactoryConfig, CardsRoot);
             _cardsFactory.Initialize();
         }
 
         public CardView GetCardView() {
-            return _cardsFactory.GetCard();
+            return _cardsFactory.GetCardView();
         }
 
         public void ReleaseCardView(CardView cardView) {
@@ -29,14 +32,22 @@ namespace Services {
         public void SetCardsInHandHero(int countAddCards) {
             var cardsData = GetRandomCardsData(countAddCards);
             for (var i = 0; i < countAddCards; i++) {
-                var card = _cardsFactory.GetCard();
                 var cardData = cardsData[i];
 
-                var imageName = cardData.LogoPrefab;
-                var cardImage = CardsImagesConfig.Config[imageName];
-                card.ShowCard(cardData);
-                card.ChangeCardImage(cardImage);
+                GetAndFillCardView(cardData);
             }
+        }
+
+        public CardView GetAndFillCardView(CardStats cardData) {
+            var card = _cardsFactory.GetCardView();
+
+            card.ShowCard(cardData);
+            
+            var imageName = cardData.LogoPrefab;
+            var cardImage = CardsImagesConfig.Config[imageName];
+            card.ChangeCardImage(cardImage);
+
+            return card;
         }
 
         public void SetCardsInHandEnemy(int countAddCards, List<CardStats> cards)

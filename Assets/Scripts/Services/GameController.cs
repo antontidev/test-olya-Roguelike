@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     public Enemy enemy;
     public GameObject enemyPanel;
 
+    public Character CurrentMoveCharacter;
+
     public DamageService DamageService;
     public CardController cardController;
 

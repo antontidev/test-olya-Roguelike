@@ -22,7 +22,7 @@ namespace Factory {
             _cardsPool.InitialFill();
         }
 
-        public CardView GetCard() {
+        public CardView GetCardView() {
             return _cardsPool.Take<CardView>(true);
         }
 

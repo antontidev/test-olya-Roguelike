@@ -1,4 +1,7 @@
-﻿using Services;
+﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
+using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,16 +19,22 @@ public class DropZone : MonoBehaviour, IDropHandler
     private int _countOfMoves;
     public TextMeshProUGUI countOfMovesText;
 
-    private bool _moveOfHero = true;
+    private bool _moveOfEnemy;
     public TextMeshProUGUI whoseMove;
 
-    
+    private CardView _lastCardView;
+    private List<CardStats> _currentCards;
+
+    private void Awake() {
+        _currentCards = new List<CardStats>();
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         _card = eventData.pointerDrag;
         if (!_card.GetComponent<DragDrop>()) return;
         
-        HeroMove();
+        HeroAddCardToMove();
 
         if (Enemy.EnemyIsDie)
         {
@@ -35,26 +44,50 @@ public class DropZone : MonoBehaviour, IDropHandler
         }
         _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
         if (_countOfMoves < 3 && _countAddCards > 0) return;
+
+        var sequence = DOTween.Sequence();
         
-        SwitchMove(); //начало хода врага
-        СardDistribution();
-        EnemyMove();
+        ActiveCards(false);
+        float cardDelay = 1f;
+        for (int i = 0; i < _currentCards.Count; i++) {
+            var card = _currentCards[i];
+            sequence.AppendInterval(cardDelay * i)
+                .AppendCallback(() => {
+                    if (_lastCardView != null) cardController.ReleaseCardView(_lastCardView);
+                    
+                    _lastCardView = cardController.GetAndFillCardView(card);
+                    _lastCardView.transform.SetParent(transform);
+                    
+                    gameController.hero.CardMove(_lastCardView);
+                });
+        }
         
-        SwitchMove(); //конец хода врага и начало хода героя
-        СardDistribution();
+        _currentCards.Clear();
+        
+        sequence.AppendCallback(() => {
+            ActiveCards(true);
+            SwitchMove(); //начало хода врага
+            СardDistribution();
+            EnemyMove();
+
+            SwitchMove(); //конец хода врага и начало хода героя
+            СardDistribution();
+            
+            cardController.ReleaseCardView(_lastCardView);
+        });
     }
 
-    private void HeroMove()
+    private void HeroAddCardToMove()
     {
-        ActiveCards(false);
         _card.GetComponent<DragDrop>().defaultParent = transform;
 
         var cardComponent = _card.GetComponent<CardView>();
-        gameController.hero.CardMove(cardComponent);
+        
+        _currentCards.Add(cardComponent.CardStat);
+        
         SetCountOfMoves(_countOfMoves + 1);
             
         cardController.ReleaseCardView(cardComponent);
-        ActiveCards(true);
     }
     
     private void EnemyMove()
@@ -75,8 +108,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         var cardStats = gameController.enemy.CardsInHand[numRandomStat];
         gameController.enemy.CardsInHand.RemoveAt(numRandomStat);
 
-        var card = cardController.GetCardView();
-        card.ShowCard(cardStats);
+        var card = cardController.GetAndFillCardView(cardStats);
 
         gameController.enemy.CardMove(card);
         SetCountOfMoves(_countOfMoves + 1);
@@ -86,7 +118,7 @@ public class DropZone : MonoBehaviour, IDropHandler
 
     private void СardDistribution()
     {
-        if (_moveOfHero)
+        if (_moveOfEnemy)
         {
             _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
             if (_countAddCards < 6)
@@ -106,15 +138,15 @@ public class DropZone : MonoBehaviour, IDropHandler
     }
     private void SwitchMove()
     {
-        if (_moveOfHero)
+        if (_moveOfEnemy)
         {
             whoseMove.text = "Ход врага";
-            _moveOfHero = false;
+            _moveOfEnemy = false;
         }
         else
         {
             whoseMove.text = "Ваш ход";
-            _moveOfHero = true;
+            _moveOfEnemy = true;
         }
         SetCountOfMoves(0);
     }
