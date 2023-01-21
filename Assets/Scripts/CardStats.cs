@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
 
-public struct CardStats
-{
-    public readonly string Name;
-    public readonly string Description;
-    public readonly string LogoPrefab;
+[Serializable]
+public struct CardStats {
+    public string Guid;
+    public string Name;
+    public string Description;
+    public string LogoPrefab;
 
-    public readonly int Heal;
-    public readonly int Defense;
-    public readonly int Damage;
-    public readonly int CountAddCards;
+    public int Heal;
+    public int Defense;
+    public int Damage;
+    public int CountAddCards;
 
     public CardStats(int heal, int damage, int defense, int countAddCards, string name, string description,
-        string logoPrefab)
-    {
+        string logoPrefab) {
+        Guid = System.Guid.NewGuid().ToString();
         Name = name;
         Description = description;
         LogoPrefab = logoPrefab;

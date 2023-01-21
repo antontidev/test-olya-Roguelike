@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class DropZone : MonoBehaviour, IDropHandler
 {
-    private static readonly System.Random Random = new();
+    private System.Random _random;
     
     public GameController gameController;
     public CardController cardController;
@@ -26,6 +26,7 @@ public class DropZone : MonoBehaviour, IDropHandler
     private List<CardStats> _currentCards;
 
     private void Awake() {
+        _random = new System.Random();
         _currentCards = new List<CardStats>();
     }
 
@@ -45,35 +46,41 @@ public class DropZone : MonoBehaviour, IDropHandler
         _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
         if (_countOfMoves < 3 && _countAddCards > 0) return;
 
+        DoCurrentUnitMove(() => {
+            SwitchMove(); //начало хода врага
+            СardDistribution();
+            EnemyMove();
+            
+            DoCurrentUnitMove(() => {
+                SwitchMove(); //конец хода врага и начало хода героя
+                СardDistribution();
+            });
+        });
+    }
+
+    private void DoCurrentUnitMove(Action callback = null) {
         var sequence = DOTween.Sequence();
-        
         ActiveCards(false);
         float cardDelay = 1f;
         for (int i = 0; i < _currentCards.Count; i++) {
             var card = _currentCards[i];
-            sequence.AppendInterval(cardDelay * i)
-                .AppendCallback(() => {
+                sequence.AppendCallback(() => {
                     if (_lastCardView != null) cardController.ReleaseCardView(_lastCardView);
-                    
+
                     _lastCardView = cardController.GetAndFillCardView(card);
                     _lastCardView.transform.SetParent(transform);
-                    
-                    gameController.hero.CardMove(_lastCardView);
-                });
-        }
-        
-        _currentCards.Clear();
-        
-        sequence.AppendCallback(() => {
-            ActiveCards(true);
-            SwitchMove(); //начало хода врага
-            СardDistribution();
-            EnemyMove();
 
-            SwitchMove(); //конец хода врага и начало хода героя
-            СardDistribution();
+                    gameController.CurrentMoveCharacter.CardMove(_lastCardView);
+                }).AppendInterval(cardDelay);
+        }
+
+        _currentCards.Clear();
+
+        sequence.AppendCallback(() => {
+            callback?.Invoke();
             
             cardController.ReleaseCardView(_lastCardView);
+            ActiveCards(true);
         });
     }
 
@@ -86,74 +93,69 @@ public class DropZone : MonoBehaviour, IDropHandler
         _currentCards.Add(cardComponent.CardStat);
         
         SetCountOfMoves(_countOfMoves + 1);
-            
-        cardController.ReleaseCardView(cardComponent);
+
+        gameController.hero.RemoveCardFromHand(cardComponent.CardStat);
     }
     
     private void EnemyMove()
     {
-        ActiveCards(false);
         for (var i = 0; i < 3; i++)
-            EnemyCardMove();
-        ActiveCards(true);
+            EnemyAddCardToMove();
     }
 
-    private void EnemyCardMove()
+    private void EnemyAddCardToMove()
     {
-        if (gameController.enemy.CardsInHand.Count <= 0)
-            return;
-        
-        var numRandomStat = Random.Next(gameController.enemy.CardsInHand.Count);
-        
-        var cardStats = gameController.enemy.CardsInHand[numRandomStat];
-        gameController.enemy.CardsInHand.RemoveAt(numRandomStat);
+        var numRandomStat = _random.Next(gameController.enemy.GetHandCount());
 
-        var card = cardController.GetAndFillCardView(cardStats);
+        var cardStats = gameController.enemy.GetAndRemoveCardFromHand(numRandomStat);
 
-        gameController.enemy.CardMove(card);
         SetCountOfMoves(_countOfMoves + 1);
         
-        cardController.ReleaseCardView(card);
+        _currentCards.Add(cardStats);
     }
 
     private void СardDistribution()
     {
-        if (_moveOfEnemy)
+        if (!_moveOfEnemy)
         {
             _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
             if (_countAddCards < 6)
-                cardController.SetCardsInHandHero(6 - _countAddCards);
+                gameController.hero.SetCardsInHand(6 - _countAddCards);
         }
         else
         {
-            _countAddCards = gameController.enemy.CardsInHand.Count;
+            _countAddCards = gameController.enemy.GetHandCount();
             if (_countAddCards < 6)
-                cardController.SetCardsInHandEnemy(6 - _countAddCards, gameController.enemy.CardsInHand);
+                gameController.enemy.SetCardsInHand(6 - _countAddCards);
         }
     }
+    
     private void ActiveCards(bool activeMove)
     {
         foreach (var dragDrop in cardController.GetComponentsInChildren<DragDrop>())
             dragDrop.enabled = activeMove;
     }
+    
     private void SwitchMove()
     {
         if (_moveOfEnemy)
         {
-            whoseMove.text = "Ход врага";
+            whoseMove.text = "Ваш ход";
+            gameController.CurrentMoveCharacter = gameController.hero;
             _moveOfEnemy = false;
         }
         else
         {
-            whoseMove.text = "Ваш ход";
+            whoseMove.text = "Ход врага";
+            gameController.CurrentMoveCharacter = gameController.enemy;
             _moveOfEnemy = true;
         }
         SetCountOfMoves(0);
     }
+    
     private void SetCountOfMoves(int countOfMoves)
     {
         _countOfMoves = countOfMoves;
         countOfMovesText.text = _countOfMoves + "/3";
     }
-
 }

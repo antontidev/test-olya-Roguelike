@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Pools.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Core.Pools.Base {
+namespace Core.Pools {
     public class GameObjectsPool {
         public int NumTotal => _realSize;
         public int NumActive => _taken.Count;
         public int NumInactive => NumTotal - NumActive;
 
         private Transform _parent;
+        private Transform _inactiveParent;
         private Action<GameObject> _instantiateProcess;
 
         private int _realSize;
@@ -32,6 +34,11 @@ namespace Core.Pools.Base {
 
         public GameObjectsPool SetParentContainer(Transform parent) {
             _parent = parent;
+            return this;
+        }
+
+        public GameObjectsPool SetInactiveParentContainer(Transform inactiveParent) {
+            _inactiveParent = inactiveParent;
             return this;
         }
 
@@ -69,7 +76,7 @@ namespace Core.Pools.Base {
         public void Release(MonoBehaviour obj, bool returnToParent = false) {
             var gameObject = obj.gameObject;
             gameObject.SetActive(false);
-            gameObject.transform.SetParent(_parent);
+            gameObject.transform.SetParent(_inactiveParent);
             if (obj is IPoolReset poolReset) {
                 poolReset.Reset();
             }
@@ -96,7 +103,7 @@ namespace Core.Pools.Base {
 
         public void Instantiate(int count) {
             for (var i = 0; i < count; i++) {
-                var go = Object.Instantiate(_prefab, _parent);
+                var go = Object.Instantiate(_prefab, _inactiveParent);
                 _instantiateProcess?.Invoke(go);
                 go.SetActive(false);
                 _objects.Enqueue(go);

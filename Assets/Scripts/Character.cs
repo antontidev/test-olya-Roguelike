@@ -1,3 +1,5 @@
+using System;
+using DefaultNamespace;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -10,16 +12,39 @@ public abstract class Character : MonoBehaviour
     protected int Defence;
     protected int Damage;
 
+    public Animator Animator;
     public CharacterStatusView CharacterStatusView;
+    public CardsHand CardsHand;
     public TextMeshProUGUI cardMove;
     
     public GameController gameController;
     public CardController cardController;
 
+    public void Initialize(int initialHand) {
+        CardsHand.Initialize(cardController, initialHand);
+    }
+
+    public int GetHandCount() {
+        return CardsHand.CardsInHand.Count;
+    }
+
+    public void SetCardsInHand(int countToAdd) {
+        CardsHand.SetCardsInHand(countToAdd);
+    }
+
+    public CardStats GetAndRemoveCardFromHand(int index) {
+        return CardsHand.GetAndRemove(index);
+    }
+
+    public void RemoveCardFromHand(CardStats stats) {
+        CardsHand.Remove(stats);
+    }
+    
     public abstract void Start();
     
     public void GetDamage(int damage) 
     {
+        Animator.SetTrigger("Damage");
         if (Defence == 0)
         {
             cardMove.text = "-" + damage + " здоровья";

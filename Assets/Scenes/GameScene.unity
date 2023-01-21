@@ -515,6 +515,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 901102437}
     m_Modifications:
+    - target: {fileID: 1090154227854996786, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
+      propertyPath: m_Constraint
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090154227854996786, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
+      propertyPath: m_ConstraintCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2661339794839953072, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
       propertyPath: m_Name
       value: Hand Area
@@ -605,6 +613,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
+--- !u!114 &5685826303611340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6450407322054330878, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
+  m_PrefabInstance: {fileID: 5685826303611339}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1dee782ec54ab19ed15eb39f29e1d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1720850378699091475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -737,6 +756,10 @@ PrefabInstance:
       propertyPath: levelNumber
       value: 
       objectReference: {fileID: 2130999455}
+    - target: {fileID: 3409337181327405385, guid: 34719373f0dbf194cab77eb373563862, type: 3}
+      propertyPath: CardsHandView
+      value: 
+      objectReference: {fileID: 5685826303611340}
     - target: {fileID: 3409337181327405385, guid: 34719373f0dbf194cab77eb373563862, type: 3}
       propertyPath: cardController
       value: 

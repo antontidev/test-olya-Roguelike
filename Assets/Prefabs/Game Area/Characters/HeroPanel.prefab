@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 391886712775856050}
   - component: {fileID: 8667907511154735239}
   - component: {fileID: 6210192522221049392}
+  - component: {fileID: 7376172575918776161}
   m_Layer: 5
   m_Name: HeroPanel
   m_TagString: Untagged
@@ -196,9 +197,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterStatusView: {fileID: 5503363826143677251}
+  CardsHand: {fileID: 7376172575918776161}
   cardMove: {fileID: 913527276922322807}
   gameController: {fileID: 0}
   cardController: {fileID: 1523042514343264069, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
+--- !u!114 &7376172575918776161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4887840425427799965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fd252badc04142873c8af81b59b047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6399759897558284750
 PrefabInstance:
   m_ObjectHideFlags: 0

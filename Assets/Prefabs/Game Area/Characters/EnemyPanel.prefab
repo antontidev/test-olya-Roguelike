@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 391886712775856050}
   - component: {fileID: 8667907511154735239}
   - component: {fileID: 847231719497351159}
+  - component: {fileID: 8267378845002052249}
   m_Layer: 5
   m_Name: EnemyPanel
   m_TagString: Untagged
@@ -196,10 +197,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterStatusView: {fileID: 5503363826143677251}
-  spritePrefab: {fileID: 0}
+  CardsHand: {fileID: 8267378845002052249}
   cardMove: {fileID: 8660769426367816892}
   gameController: {fileID: 7289686699546836507, guid: 92fa3529633cf714c983e783d6df08af, type: 3}
   cardController: {fileID: 7586832408351765095, guid: 92fa3529633cf714c983e783d6df08af, type: 3}
+--- !u!114 &8267378845002052249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4887840425427799965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fd252badc04142873c8af81b59b047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6399759897558284750
 PrefabInstance:
   m_ObjectHideFlags: 0

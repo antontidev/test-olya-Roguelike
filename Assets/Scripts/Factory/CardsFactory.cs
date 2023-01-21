@@ -1,5 +1,6 @@
 ﻿using Configs;
 using Core;
+using Core.Pools;
 using Core.Pools.Base;
 using UnityEngine;
 
@@ -28,6 +29,10 @@ namespace Factory {
 
         public void Release(CardView obj) {
             _cardsPool.Release(obj, true);
+        }
+
+        public void SetInactiveParent(Transform cardsRootInactive) {
+            _cardsPool.SetInactiveParentContainer(cardsRootInactive);
         }
     }
 }

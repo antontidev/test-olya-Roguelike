@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : Character
@@ -7,29 +8,27 @@ public class Enemy : Character
 
     private GameObject _destroyEnemy;
 
-    public List<CardStats> CardsInHand;
     public static bool EnemyIsDie;
 
     public override void Start()
     {
         var characterStats = RandomSelection();
         
-        Instantiate(Resources.Load(characterStats.SpriteLink), transform, false);
+        var obj = (GameObject)Instantiate(Resources.Load(characterStats.SpriteLink), transform, false);
+        Animator = obj.GetComponent<Animator>();
         
         MaxHealth = Health = characterStats.MaxHealth;
         CharacterStatusView.SetMaxHealth(MaxHealth);
         
         Damage = characterStats.Damage;
         SetDefense(characterStats.Defense);
-
-        CardsInHand = new List<CardStats>();
-        cardController.SetCardsInHandEnemy(6, CardsInHand);
     }
 
     public override void CardMove(CardView cardView)
     {
         if (cardView.CardStat.Damage != 0)
         {
+            Animator.SetTrigger("Attack");
             gameController.hero.GetDamage(Damage * cardView.CardStat.Damage);
         }
         if (cardView.CardStat.Heal != 0)
@@ -42,12 +41,13 @@ public class Enemy : Character
         {
             cardMove.text = "+" + cardView.CardStat.Heal + " защиты";
             SetDefense(Defence + cardView.CardStat.Defense);
+            Animator.SetTrigger("Defence");
             cardMove.text = "";
         }
         if (cardView.CardStat.CountAddCards != 0)
         {
             cardMove.text = "+" + cardView.CardStat.Heal + " карты";
-            cardController.SetCardsInHandEnemy(cardView.CardStat.CountAddCards, CardsInHand);
+            CardsHand.SetCardsInHand(cardView.CardStat.CountAddCards);
             cardMove.text = "";
         }
     }

@@ -2,24 +2,26 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterHealthView : MonoBehaviour {
-    public Slider Slider;
-    public TextMeshProUGUI CountOfHealth;
-    public Image SliderImage;
+namespace Views {
+    public class CharacterHealthView : MonoBehaviour {
+        public Slider Slider;
+        public TextMeshProUGUI CountOfHealth;
+        public Image SliderImage;
 
-    public void SetMaxHealth(int maxHealth) {
-        Slider.maxValue = maxHealth;
+        public void SetMaxHealth(int maxHealth) {
+            Slider.maxValue = maxHealth;
 
-        SetHealth(maxHealth);
-    }
+            SetHealth(maxHealth);
+        }
 
-    public void SetHealth(int health) {
-        Slider.value = health;
+        public void SetHealth(int health) {
+            Slider.value = health;
 
-        CountOfHealth.text = Slider.value + "/" + Slider.maxValue;
-    }
+            CountOfHealth.text = Slider.value + "/" + Slider.maxValue;
+        }
 
-    public void SetSliderColor(Color color) {
-        SliderImage.color = color;
+        public void SetSliderColor(Color color) {
+            SliderImage.color = color;
+        }
     }
 }
