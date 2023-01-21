@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2661339794839953084}
   - component: {fileID: 2661339794839953085}
   - component: {fileID: 8357720796412198785}
-  - component: {fileID: 7229944335299460058}
+  - component: {fileID: 1028731459948982875}
   m_Layer: 5
   m_Name: Hand Area
   m_TagString: Untagged
@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2661339794839953072}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &7229944335299460058
+--- !u!114 &1028731459948982875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2661339794839953072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0876be9420c24c13b4e8c52ea67b1fc1, type: 3}
+  m_Script: {fileID: 11500000, guid: 56004aa7e47051e40b4863c3a02f89fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 3739784786396364868, guid: 4cfd9de80e6da3346a4482cd5e853f02, type: 3}

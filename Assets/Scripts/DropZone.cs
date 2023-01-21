@@ -73,18 +73,16 @@ public class DropZone : MonoBehaviour, IDropHandler
         
         var cardStats = gameController.enemy.CardsInHand[numRandomStat];
         gameController.enemy.CardsInHand.RemoveAt(numRandomStat);
-        
-        var cardGameObject = Instantiate(cardController.cardPrefab, transform, false);
-        var card = cardGameObject.GetComponent<Card>();
+
+        var card = cardController.GetCardView();
         card.ShowCard(cardStats);
 
         gameController.enemy.CardMove(card);
         SetCountOfMoves(_countOfMoves + 1);
         
-        Destroy(cardGameObject);
+        cardController.ReleaseCardView(card);
     }
 
-    
     private void СardDistribution()
     {
         if (_moveOfHero)

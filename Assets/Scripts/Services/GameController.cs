@@ -2,7 +2,6 @@ using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class GameController : MonoBehaviour
 {
     private int _countWave;

@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// Разбить на CharacterDefenceView и CharacterHealthView
 public class CharacterHealthView : MonoBehaviour {
     public Slider Slider;
     public TextMeshProUGUI CountOfHealth;

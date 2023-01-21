@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Configs;
+using Factory;
 using UnityEngine;
 
 namespace Services {
@@ -6,27 +8,53 @@ namespace Services {
     {
         private static readonly System.Random Random = new();
 
-        public GameObject cardPrefab;
+        public CardsFactoryConfig CardsFactoryConfig;
 
-        public void SetCardsInHandHero(int countAddCards)
-        {
-            for (var i = 0; i < countAddCards; i++)
-                Instantiate(cardPrefab, transform, false).GetComponent<Card>().ShowRandomCard();
+        private CardsFactory _cardsFactory;
+
+        private void Awake() {
+            _cardsFactory = new CardsFactory(CardsFactoryConfig, transform);
+            _cardsFactory.Initialize();
+        }
+
+        public Card GetCardView() {
+            return _cardsFactory.GetCard();
+        }
+
+        public void ReleaseCardView(Card card) {
+            _cardsFactory.Release(card);
+        }
+
+        public void SetCardsInHandHero(int countAddCards) {
+            var cardsData = GetRandomCardsData(countAddCards);
+            for (var i = 0; i < countAddCards; i++) {
+                var card = _cardsFactory.GetCard();
+                var cardData = cardsData[i];
+                
+                card.ShowCard(cardData);
+            }
         }
 
         public void SetCardsInHandEnemy(int countAddCards, List<CardStats> cards)
         {
-            for (var i = 0; i < countAddCards; i++)
-            {
-                var card = RandomSelection();
-                cards.Add(card);
-            }
+            GetRandomCardsData(countAddCards, cards);
         }
     
-        public static CardStats RandomSelection()
-        {
-            var card = CardMap.Cards[Random.Next(CardMap.Cards.Count)];
-            return card;
+        private List<CardStats> GetRandomCardsData(int count) {
+            var list = new List<CardStats>(count);
+
+            for (int i = 0; i < count; i++) {
+                var card = CardMap.Cards[Random.Next(CardMap.Cards.Count)];
+                list.Add(card);
+            }
+            return list;
+        }
+
+        private void GetRandomCardsData(int count, List<CardStats> list) {
+            for (int i = 0; i < count; i++) {
+                var card = CardMap.Cards[Random.Next(CardMap.Cards.Count)];
+                list.Add(card);
+            }
         }
     }
 }

@@ -52,9 +52,4 @@ public class Card : MonoBehaviour
             _ => description.text
         };
     }
-
-    public void ShowRandomCard()
-    {
-        ShowCard(CardController.RandomSelection());
-    }
 }
