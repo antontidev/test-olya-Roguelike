@@ -33,7 +33,7 @@ public class DropZone : MonoBehaviour, IDropHandler
             СardDistribution();
             Enemy.EnemyIsDie = false;
         }
-        _countAddCards = cardController.GetComponentsInChildren<Card>().Length;
+        _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
         if (_countOfMoves < 3 && _countAddCards > 0) return;
         
         SwitchMove(); //начало хода врага
@@ -49,7 +49,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         ActiveCards(false);
         _card.GetComponent<DragDrop>().defaultParent = transform;
 
-        var cardComponent = _card.GetComponent<Card>();
+        var cardComponent = _card.GetComponent<CardView>();
         gameController.hero.CardMove(cardComponent);
         SetCountOfMoves(_countOfMoves + 1);
             
@@ -88,7 +88,7 @@ public class DropZone : MonoBehaviour, IDropHandler
     {
         if (_moveOfHero)
         {
-            _countAddCards = cardController.GetComponentsInChildren<Card>().Length;
+            _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
             if (_countAddCards < 6)
                 cardController.SetCardsInHandHero(6 - _countAddCards);
         }

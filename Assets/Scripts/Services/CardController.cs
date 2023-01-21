@@ -18,12 +18,12 @@ namespace Services {
             _cardsFactory.Initialize();
         }
 
-        public Card GetCardView() {
+        public CardView GetCardView() {
             return _cardsFactory.GetCard();
         }
 
-        public void ReleaseCardView(Card card) {
-            _cardsFactory.Release(card);
+        public void ReleaseCardView(CardView cardView) {
+            _cardsFactory.Release(cardView);
         }
 
         public void SetCardsInHandHero(int countAddCards) {

@@ -1,12 +1,10 @@
-﻿using System;
-using Core.Pools.Base;
-using Services;
+﻿using Core.Pools.Base;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour,
-                    IPoolReset {
+public class CardView : MonoBehaviour,
+                        IPoolReset {
     public CardStats CardStat;
 
     public TextMeshProUGUI title;

@@ -55,6 +55,6 @@ public abstract class Character : MonoBehaviour
         Damage = damage;
     }
 
-    public abstract void CardMove(Card card);
+    public abstract void CardMove(CardView cardView);
     protected abstract void IsDie();
 }

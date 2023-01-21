@@ -22,11 +22,11 @@ namespace Factory {
             _cardsPool.InitialFill();
         }
 
-        public Card GetCard() {
-            return _cardsPool.Take<Card>(true);
+        public CardView GetCard() {
+            return _cardsPool.Take<CardView>(true);
         }
 
-        public void Release(Card obj) {
+        public void Release(CardView obj) {
             _cardsPool.Release(obj, true);
         }
     }
