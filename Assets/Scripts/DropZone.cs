@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Services;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -54,6 +55,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         Destroy(_card);
         ActiveCards(true);
     }
+    
     private void EnemyMove()
     {
         ActiveCards(false);

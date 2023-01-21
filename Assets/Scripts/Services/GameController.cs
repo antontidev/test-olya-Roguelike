@@ -1,3 +1,4 @@
+using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour
     public Enemy enemy;
     public GameObject enemyPanel;
 
+    public DamageService DamageService;
     public CardController cardController;
 
     public void Start()
@@ -43,7 +45,9 @@ public class GameController : MonoBehaviour
             enemy.gameController = this;
             _countWave--;
         }
-        else NextLevel();
+        else {
+            NextLevel();
+        }
     }
 
     public void EndGame()
