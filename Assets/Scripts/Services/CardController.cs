@@ -9,7 +9,8 @@ namespace Services {
         private static readonly System.Random Random = new();
 
         public CardsFactoryConfig CardsFactoryConfig;
-
+        public CardsImagesConfig CardsImagesConfig;
+        
         private CardsFactory _cardsFactory;
 
         private void Awake() {
@@ -30,8 +31,11 @@ namespace Services {
             for (var i = 0; i < countAddCards; i++) {
                 var card = _cardsFactory.GetCard();
                 var cardData = cardsData[i];
-                
+
+                var imageName = cardData.LogoPrefab;
+                var cardImage = CardsImagesConfig.Config[imageName];
                 card.ShowCard(cardData);
+                card.ChangeCardImage(cardImage);
             }
         }
 

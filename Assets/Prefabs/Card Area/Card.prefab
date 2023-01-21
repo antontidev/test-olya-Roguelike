@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 4489055442505666337}
-  logoArea: {fileID: 4783490738620408626}
+  CardImage: {fileID: 8970648203539953100}
   description: {fileID: 4914875612710782195}
   defenceText: {fileID: 8542603543726028359}
   damageText: {fileID: 8771406907107145984}
@@ -1278,6 +1278,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5289100460042869330}
     m_Modifications:
+    - target: {fileID: 4354195364590374349, guid: 902458dac7eaa1448829a68ac7401a79, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5341765712734782876, guid: 902458dac7eaa1448829a68ac7401a79, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1373,3 +1377,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5341765712734782876, guid: 902458dac7eaa1448829a68ac7401a79, type: 3}
   m_PrefabInstance: {fileID: 4617052315620308993}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8970648203539953100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4354195364590374349, guid: 902458dac7eaa1448829a68ac7401a79, type: 3}
+  m_PrefabInstance: {fileID: 4617052315620308993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

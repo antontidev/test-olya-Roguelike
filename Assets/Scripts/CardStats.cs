@@ -4,7 +4,8 @@ public struct CardStats
 {
     public readonly string Name;
     public readonly string Description;
-    
+    public readonly string LogoPrefab;
+
     public readonly int Heal;
     public readonly int Defense;
     public readonly int Damage;
@@ -15,6 +16,7 @@ public struct CardStats
     {
         Name = name;
         Description = description;
+        LogoPrefab = logoPrefab;
         Heal = heal;
         Damage = damage;
         Defense = defense;

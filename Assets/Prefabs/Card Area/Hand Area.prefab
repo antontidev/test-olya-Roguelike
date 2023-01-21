@@ -114,4 +114,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56004aa7e47051e40b4863c3a02f89fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 3739784786396364868, guid: 4cfd9de80e6da3346a4482cd5e853f02, type: 3}
+  CardsFactoryConfig: {fileID: 11400000, guid: 4794d18ff0ebe0e43bcd980462ae2d11, type: 2}
+  CardsImagesConfig: {fileID: 11400000, guid: 23970c7a2843a9646af102447e90c03a, type: 2}

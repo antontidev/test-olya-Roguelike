@@ -3,13 +3,14 @@ using Core.Pools.Base;
 using Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour,
                     IPoolReset {
     public CardStats CardStat;
 
     public TextMeshProUGUI title;
-    public GameObject logoArea;
+    public Image CardImage;
     public TextMeshProUGUI description;
     public TextMeshProUGUI defenceText;
     public TextMeshProUGUI damageText;
@@ -60,5 +61,9 @@ public class Card : MonoBehaviour,
 
     public void Reset() {
         CanvasGroup.blocksRaycasts = true;
+    }
+
+    public void ChangeCardImage(Sprite cardImage) {
+        CardImage.sprite = cardImage;
     }
 }
