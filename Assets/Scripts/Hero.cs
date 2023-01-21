@@ -8,7 +8,7 @@ public class Hero : Character
         Instantiate(Resources.Load(HeroMap.Heroes[0].SpriteLink), transform, false);
 
         MaxHealth = Health = HeroMap.Heroes[0].MaxHealth;
-        healthBar.SetMaxHealth(MaxHealth);
+        CharacterStatusView.SetMaxHealth(MaxHealth);
 
         SetDamage(HeroMap.Heroes[0].Damage);
         SetDefense(HeroMap.Heroes[0].Defense);
@@ -31,7 +31,7 @@ public class Hero : Character
         if (card.CardStat.Defense != 0)
         {
             cardMove.text = "+" + card.CardStat.Heal + " защиты";
-            SetDefense(Defense + card.CardStat.Defense);
+            SetDefense(Defence + card.CardStat.Defense);
             cardMove.text = "";
         }
         if (card.CardStat.CountAddCards != 0) 

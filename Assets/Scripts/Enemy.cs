@@ -17,7 +17,7 @@ public class Enemy : Character
         Instantiate(Resources.Load(characterStats.SpriteLink), transform, false);
         
         MaxHealth = Health = characterStats.MaxHealth;
-        healthBar.SetMaxHealth(MaxHealth);
+        CharacterStatusView.SetMaxHealth(MaxHealth);
         
         Damage = characterStats.Damage;
         SetDefense(characterStats.Defense);
@@ -41,7 +41,7 @@ public class Enemy : Character
         if (card.CardStat.Defense != 0)
         {
             cardMove.text = "+" + card.CardStat.Heal + " защиты";
-            SetDefense(Defense + card.CardStat.Defense);
+            SetDefense(Defence + card.CardStat.Defense);
             cardMove.text = "";
         }
         if (card.CardStat.CountAddCards != 0)

@@ -1,15 +1,15 @@
 using TMPro;
 using UnityEngine;
+using Views;
 
 public abstract class Character : MonoBehaviour
 {
     protected int MaxHealth;
     protected int Health;
-    protected int Defense;
+    protected int Defence;
     protected int Damage;
 
-    public HealthBar healthBar;
-    public GameObject spritePrefab;
+    public CharacterStatusView CharacterStatusView;
     public TextMeshProUGUI cardMove;
     
     public GameController gameController;
@@ -19,17 +19,17 @@ public abstract class Character : MonoBehaviour
     
     public void GetDamage(int damage) 
     {
-        if (Defense == 0)
+        if (Defence == 0)
         {
             cardMove.text = "-" + damage + " здоровья";
             SetHealth(Health-damage);
         }
-        else if (Defense >= damage)
-            SetDefense(Defense-damage);
-        else if (Defense < damage) 
+        else if (Defence >= damage)
+            SetDefense(Defence-damage);
+        else if (Defence < damage) 
         {
-            cardMove.text = "-" + (damage-Defense) + " здоровья";
-            SetHealth(Health-damage+Defense);
+            cardMove.text = "-" + (damage-Defence) + " здоровья";
+            SetHealth(Health-damage+Defence);
             SetDefense(0);
         }
         cardMove.text = "";
@@ -39,14 +39,14 @@ public abstract class Character : MonoBehaviour
     {
         Health = (health>MaxHealth?MaxHealth:health);
         
-        healthBar.SetHealth(Health);
+        CharacterStatusView.SetHealth(Health);
         
         if (Health <= 0) IsDie();
     }
-    protected void SetDefense(int defense)
+    protected void SetDefense(int defence)
     {
-        Defense = defense;
-        healthBar.SetDefense(Defense);
+        Defence = defence;
+        CharacterStatusView.SetDefence(Defence);
     }
 
     public void SetDamage(int damage)
