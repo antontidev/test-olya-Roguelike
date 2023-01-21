@@ -3,7 +3,6 @@
 public struct CardStats
 {
     public readonly string Name;
-    public readonly GameObject LogoPrefab;
     public readonly string Description;
     
     public readonly int Heal;
@@ -16,7 +15,6 @@ public struct CardStats
     {
         Name = name;
         Description = description;
-        LogoPrefab = Resources.Load(logoPrefab) as GameObject;
         Heal = heal;
         Damage = damage;
         Defense = defense;

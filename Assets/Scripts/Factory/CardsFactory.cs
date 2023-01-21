@@ -1,5 +1,6 @@
 ﻿using Configs;
 using Core;
+using Core.Pools.Base;
 using UnityEngine;
 
 namespace Factory {
@@ -13,12 +14,12 @@ namespace Factory {
             _config = config;
             _parent = parent;
 
-            _cardsPool = new GameObjectsPool(config.CardPrefab, config.InitialCount);
+            _cardsPool = new GameObjectsPool(config.CardPrefab, config.ExpandType, config.ExpandPercent, config.InitialCount);
             _cardsPool.SetParentContainer(parent);
         }
 
         public void Initialize() {
-            _cardsPool.Fill(false);
+            _cardsPool.InitialFill();
         }
 
         public Card GetCard() {
@@ -26,7 +27,7 @@ namespace Factory {
         }
 
         public void Release(Card obj) {
-            _cardsPool.Release(obj);
+            _cardsPool.Release(obj, true);
         }
     }
 }

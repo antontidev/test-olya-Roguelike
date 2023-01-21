@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Pools;
+using UnityEngine;
 
 namespace Configs {
     [CreateAssetMenu(menuName = "Configs/Factory/Cards factory", fileName = "CardsFactoryConfig")]
@@ -6,5 +7,7 @@ namespace Configs {
         public GameObject CardPrefab;
 
         public int InitialCount;
+        public ExpandType ExpandType;
+        public ExpandType ExpandPercent;
     }
 }

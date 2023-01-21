@@ -48,11 +48,12 @@ public class DropZone : MonoBehaviour, IDropHandler
     {
         ActiveCards(false);
         _card.GetComponent<DragDrop>().defaultParent = transform;
-        
-        gameController.hero.CardMove(_card.GetComponent<Card>());
+
+        var cardComponent = _card.GetComponent<Card>();
+        gameController.hero.CardMove(cardComponent);
         SetCountOfMoves(_countOfMoves + 1);
             
-        Destroy(_card);
+        cardController.ReleaseCardView(cardComponent);
         ActiveCards(true);
     }
     

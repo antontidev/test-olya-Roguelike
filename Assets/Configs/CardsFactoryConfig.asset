@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPrefab: {fileID: 3739784786396364868, guid: 4cfd9de80e6da3346a4482cd5e853f02, type: 3}
   InitialCount: 12
+  ExpandType: 10
+  ExpandPercent: 90

@@ -1,19 +1,25 @@
 ﻿using System;
+using Core.Pools.Base;
 using Services;
 using TMPro;
 using UnityEngine;
 
-public class Card : MonoBehaviour
-{
+public class Card : MonoBehaviour,
+                    IPoolReset {
     public CardStats CardStat;
 
     public TextMeshProUGUI title;
     public GameObject logoArea;
     public TextMeshProUGUI description;
+    public TextMeshProUGUI defenceText;
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI healText;
     
     public GameObject damage;
     public GameObject heal;
     public GameObject defense;
+
+    public CanvasGroup CanvasGroup;
 
     public void ShowCard(CardStats cardStat)
     {
@@ -24,25 +30,24 @@ public class Card : MonoBehaviour
         else
         {
             damage.SetActive(true);
-            damage.GetComponentInChildren<TextMeshProUGUI>().text = CardStat.Damage.ToString();
+            damageText.text = CardStat.Damage.ToString();
         }
         if (CardStat.Defense == 0)
             defense.SetActive(false);
         else
         {
             defense.SetActive(true);
-            defense.GetComponentInChildren<TextMeshProUGUI>().text = CardStat.Defense.ToString();
+            defenceText.text = CardStat.Defense.ToString();
         }
         if (CardStat.Heal == 0)
             heal.SetActive(false);
         else
         {
             heal.SetActive(true);
-            heal.GetComponentInChildren<TextMeshProUGUI>().text = CardStat.Heal.ToString();
+            healText.text = CardStat.Heal.ToString();
         }
 
         title.text = CardStat.Name;
-        Instantiate(CardStat.LogoPrefab, logoArea.transform, false);
         description.text = CardStat.CountAddCards switch
         {
             0 => CardStat.Description,
@@ -51,5 +56,9 @@ public class Card : MonoBehaviour
             5 or 6 or 7 or 8 or 9 => CardStat.Description + "Возьмите\n" + CardStat.CountAddCards + " карт",
             _ => description.text
         };
+    }
+
+    public void Reset() {
+        CanvasGroup.blocksRaycasts = true;
     }
 }
