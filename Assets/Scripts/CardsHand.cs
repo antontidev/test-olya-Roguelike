@@ -1,20 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Services;
 using UnityEngine;
 
 namespace DefaultNamespace {
     public class CardsHand : MonoBehaviour {
-        public List<CardStats> CardsInHand;
+        private List<CardStats> _cardsInHand;
         private CardController _cardController;
 
         private Action _onHandChange;
 
         public void Initialize(CardController cardController, int initialHand) {
             _cardController = cardController;
-            CardsInHand = new List<CardStats>();
+            _cardsInHand = new List<CardStats>();
             
-            SetCardsInHand(initialHand);
+            AddCardsToHand(initialHand);
+        }
+
+        public int GetHandCount() {
+            return _cardsInHand.Count;
+        }
+
+        public CardStats GetCardData(int index) {
+            return _cardsInHand[index];
         }
 
         public void SubscribeOnHandChange(Action callback) {
@@ -25,26 +34,20 @@ namespace DefaultNamespace {
             _onHandChange -= callback;
         }
         
-        public void SetCardsInHand(int countToAdd) {
-            _cardController.SetCardsInHand(countToAdd, CardsInHand);
+        public void AddCardsToHand(int countToAdd) {
+            _cardController.AddCardsToHand(countToAdd, _cardsInHand);
             
             _onHandChange?.Invoke();
         }
 
         public CardStats GetAndRemove(int index) {
-            var stat = CardsInHand[index];
+            var stat = _cardsInHand[index];
 
-            CardsInHand.RemoveAt(index);
+            _cardsInHand.RemoveAt(index);
 
             _onHandChange?.Invoke();
 
             return stat;
-        }
-
-        public void Remove(CardStats stats) {
-            CardsInHand.RemoveAll(item => item.Guid == stats.Guid);
-            
-            _onHandChange?.Invoke();
         }
     }
 }

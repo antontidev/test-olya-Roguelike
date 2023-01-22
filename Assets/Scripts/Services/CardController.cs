@@ -13,6 +13,7 @@ namespace Services {
 
         public CardsFactoryConfig CardsFactoryConfig;
         public CardsImagesConfig CardsImagesConfig;
+        public CardsConfig CardsConfig;
 
         public Transform CardsRootInactive;
         public Transform CardsRoot;
@@ -32,7 +33,7 @@ namespace Services {
 
         public CardView GetAndFillCardView(CardStats cardData) {
             var card = _cardsFactory.GetCardView();
-
+            
             card.ShowCard(cardData);
             
             var imageName = cardData.LogoPrefab;
@@ -42,14 +43,17 @@ namespace Services {
             return card;
         }
 
-        public void SetCardsInHand(int countAddCards, List<CardStats> cards)
+        public void AddCardsToHand(int countAddCards, List<CardStats> cards)
         {
             GetRandomCardsData(countAddCards, cards);
         }
 
+        // TODO add service to randomize on chances
         private void GetRandomCardsData(int count, List<CardStats> list) {
+            var cardsCount = CardsConfig.GetCardsCount();
             for (int i = 0; i < count; i++) {
-                var card = CardMap.Cards[Random.Next(CardMap.Cards.Count)];
+                var randomIndex = Random.Next(cardsCount);
+                var card = CardsConfig.Config[randomIndex];
                 list.Add(card);
             }
         }

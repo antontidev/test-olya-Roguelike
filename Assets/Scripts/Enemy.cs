@@ -14,7 +14,7 @@ public class Enemy : Character
     {
         var characterStats = RandomSelection();
         
-        var obj = (GameObject)Instantiate(Resources.Load(characterStats.SpriteLink), transform, false);
+        var obj = (GameObject)Instantiate(Resources.Load(characterStats.SpriteLink), VisualSpawnTransform, false);
         Animator = obj.GetComponent<Animator>();
         
         MaxHealth = Health = characterStats.MaxHealth;
@@ -47,7 +47,7 @@ public class Enemy : Character
         if (cardView.CardStat.CountAddCards != 0)
         {
             cardMove.text = "+" + cardView.CardStat.Heal + " карты";
-            CardsHand.SetCardsInHand(cardView.CardStat.CountAddCards);
+            CardsHand.AddCardsToHand(cardView.CardStat.CountAddCards);
             cardMove.text = "";
         }
     }

@@ -20,6 +20,8 @@ public class CardView : MonoBehaviour,
 
     public CanvasGroup CanvasGroup;
 
+    public int CardIndex;
+    
     public void ShowCard(CardStats cardStat)
     {
         CardStat = cardStat;

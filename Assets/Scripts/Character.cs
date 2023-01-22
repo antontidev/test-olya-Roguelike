@@ -7,10 +7,14 @@ using Views;
 
 public abstract class Character : MonoBehaviour
 {
+    public Canvas StatusCanvas;
+
     protected int MaxHealth;
     protected int Health;
     protected int Defence;
     protected int Damage;
+
+    public Transform VisualSpawnTransform;
 
     public Animator Animator;
     public CharacterStatusView CharacterStatusView;
@@ -22,24 +26,21 @@ public abstract class Character : MonoBehaviour
 
     public void Initialize(int initialHand) {
         CardsHand.Initialize(cardController, initialHand);
+        StatusCanvas.worldCamera = Camera.main;
     }
 
     public int GetHandCount() {
-        return CardsHand.CardsInHand.Count;
+        return CardsHand.GetHandCount();
     }
 
     public void SetCardsInHand(int countToAdd) {
-        CardsHand.SetCardsInHand(countToAdd);
+        CardsHand.AddCardsToHand(countToAdd);
     }
 
     public CardStats GetAndRemoveCardFromHand(int index) {
         return CardsHand.GetAndRemove(index);
     }
 
-    public void RemoveCardFromHand(CardStats stats) {
-        CardsHand.Remove(stats);
-    }
-    
     public abstract void Start();
     
     public void GetDamage(int damage) 

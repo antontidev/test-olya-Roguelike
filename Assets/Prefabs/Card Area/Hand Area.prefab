@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardsFactoryConfig: {fileID: 11400000, guid: 4794d18ff0ebe0e43bcd980462ae2d11, type: 2}
   CardsImagesConfig: {fileID: 11400000, guid: 23970c7a2843a9646af102447e90c03a, type: 2}
+  CardsConfig: {fileID: 11400000, guid: 343bdb8af098f62478764011748ff6c9, type: 2}
   CardsRootInactive: {fileID: 6317582270067190898}
   CardsRoot: {fileID: 3506597451534485668}
   CardsRootCanvasGroup: {fileID: 363472555934047463}

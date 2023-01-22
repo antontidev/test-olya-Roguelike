@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class Hero : Character
-{
-    public override void Start()
-    {
-        var obj = (GameObject)Instantiate(Resources.Load(HeroMap.Heroes[0].SpriteLink), transform, false);
+public class Hero : Character {
+    public override void Start() {
+        var obj = (GameObject)Instantiate(Resources.Load(HeroMap.Heroes[0].SpriteLink), VisualSpawnTransform, false);
 
+        obj.transform.localPosition = Vector3.zero;
         Animator = obj.GetComponent<Animator>();
         
         MaxHealth = Health = HeroMap.Heroes[0].MaxHealth;
@@ -38,7 +37,7 @@ public class Hero : Character
         if (cardView.CardStat.CountAddCards != 0) 
         {
             cardMove.text = "+" + cardView.CardStat.Heal + " карты";
-            CardsHand.SetCardsInHand(cardView.CardStat.CountAddCards);
+            CardsHand.AddCardsToHand(cardView.CardStat.CountAddCards);
             cardMove.text = "";
         }
     }

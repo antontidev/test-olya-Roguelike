@@ -48,8 +48,8 @@ public class DropZone : MonoBehaviour, IDropHandler
 
         DoCurrentUnitMove(() => {
             SwitchMove(); //начало хода врага
-            СardDistribution();
             EnemyMove();
+            СardDistribution();
             
             DoCurrentUnitMove(() => {
                 SwitchMove(); //конец хода врага и начало хода героя
@@ -94,7 +94,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         
         SetCountOfMoves(_countOfMoves + 1);
 
-        gameController.hero.RemoveCardFromHand(cardComponent.CardStat);
+        gameController.hero.GetAndRemoveCardFromHand(cardComponent.CardIndex);
     }
     
     private void EnemyMove()
@@ -116,18 +116,10 @@ public class DropZone : MonoBehaviour, IDropHandler
 
     private void СardDistribution()
     {
-        if (!_moveOfEnemy)
-        {
-            _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
-            if (_countAddCards < 6)
-                gameController.hero.SetCardsInHand(6 - _countAddCards);
-        }
-        else
-        {
-            _countAddCards = gameController.enemy.GetHandCount();
-            if (_countAddCards < 6)
-                gameController.enemy.SetCardsInHand(6 - _countAddCards);
-        }
+        _countAddCards = gameController.CurrentMoveCharacter.GetHandCount();
+        if (_countAddCards < 6)
+            gameController.CurrentMoveCharacter.SetCardsInHand(6 - _countAddCards);
+
     }
     
     private void ActiveCards(bool activeMove)
