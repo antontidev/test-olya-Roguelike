@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,7 @@ namespace Services {
         public CardsHandView CardsHandView;
         
         public DamageService DamageService;
+        public CameraBlendService CameraBlendService;
         public CardController cardController;
 
         public void Awake()
@@ -32,6 +34,15 @@ namespace Services {
             hero.cardController = cardController;
             hero.gameController = this;
 
+            var sequence = DOTween.Sequence();
+            
+            CameraBlendService.SwitchToHeroCamera();
+            sequence
+                .AppendInterval(1)
+                .AppendCallback(() => {
+                    CameraBlendService.SwitchToMainCamera();
+                });
+            
             CardsHandView.Initialize(hero.CardsHand, cardController);
             
             hero.Initialize(6);

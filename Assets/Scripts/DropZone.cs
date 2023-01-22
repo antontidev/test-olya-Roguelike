@@ -22,6 +22,8 @@ public class DropZone : MonoBehaviour, IDropHandler
     private bool _moveOfEnemy;
     public TextMeshProUGUI whoseMove;
 
+    public CameraBlendService CameraBlendService;
+    
     private CardView _lastCardView;
     private List<CardStats> _currentCards;
 
@@ -47,14 +49,33 @@ public class DropZone : MonoBehaviour, IDropHandler
         if (_countOfMoves < 3 && _countAddCards > 0) return;
 
         DoCurrentUnitMove(() => {
-            SwitchMove(); //начало хода врага
-            EnemyMove();
-            СardDistribution();
+            CameraBlendService.SwitchToEnemyCamera();
+            var sequence = DOTween.Sequence();
+
+            sequence
+                .AppendInterval(1)
+                .AppendCallback(() => {
+                    CameraBlendService.SwitchToMainCamera();
+                })
+                .AppendInterval(1)
+                .AppendCallback(() => {
+                    SwitchMove(); //начало хода врага
+                    EnemyMove();
+                    СardDistribution();
             
-            DoCurrentUnitMove(() => {
-                SwitchMove(); //конец хода врага и начало хода героя
-                СardDistribution();
-            });
+                    DoCurrentUnitMove(() => {
+                        SwitchMove(); //конец хода врага и начало хода героя
+                        СardDistribution();
+                        
+                        CameraBlendService.SwitchToHeroCamera();
+
+                        var sequence = DOTween.Sequence();
+                        sequence.AppendInterval(1);
+                        sequence.AppendCallback(() => {
+                            CameraBlendService.SwitchToMainCamera();
+                        });
+                    });
+                });
         });
     }
 
