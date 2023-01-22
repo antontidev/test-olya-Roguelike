@@ -48,6 +48,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         _countAddCards = cardController.GetComponentsInChildren<CardView>().Length;
         if (_countOfMoves < 3 && _countAddCards > 0) return;
 
+        // Cringe
         DoCurrentUnitMove(() => {
             CameraBlendService.SwitchToEnemyCamera();
             var sequence = DOTween.Sequence();
