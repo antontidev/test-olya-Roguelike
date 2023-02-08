@@ -1,7 +1,9 @@
+using Characters;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Views;
 
 namespace Services {
@@ -10,53 +12,42 @@ namespace Services {
         private int _countWave;
     
         private int _level;
-        public TextMeshProUGUI levelNumber;
+        public TextMeshProUGUI LevelNumber;
     
-        public Hero hero;
-        public GameObject heroPanel;
+        public Hero Hero;
+        public GameObject HeroPanel;
 
-        public Enemy enemy;
-        public GameObject enemyPanel;
+        public Enemy Enemy;
+        public GameObject EnemyPanel;
 
         public Character CurrentMoveCharacter;
 
-        public CardsHandView CardsHandView;
-        
         public DamageService DamageService;
         public CameraBlendService CameraBlendService;
-        public CardController cardController;
-
+        public CardController CardController;
+        
         public void Awake()
         {
-            cardController.Initialize();
+            _level = 0;
             
-            hero = Instantiate(heroPanel, transform, false).GetComponent<Hero>();
-            hero.cardController = cardController;
-            hero.gameController = this;
+            CardController.Initialize();
 
-            var sequence = DOTween.Sequence();
+            Hero = Instantiate(HeroPanel, transform, false).GetComponent<Hero>();
+            Hero.Initialize(CardController,this,6);
             
-            CameraBlendService.SwitchToHeroCamera();
-            sequence
-                .AppendInterval(1)
-                .AppendCallback(() => {
-                    CameraBlendService.SwitchToMainCamera();
-                });
-            
-            CardsHandView.Initialize(hero.CardsHand, cardController);
-            
-            hero.Initialize(6);
-            
+            CameraBlendService
+                .StartSequence()
+                .AppendHeroSwitch()
+                .AppendMainSwitch();
+
             NextLevel();
-            CurrentMoveCharacter = hero;
+            CurrentMoveCharacter = Hero; //?
         }
 
         private void NextLevel()
         {
-            levelNumber.text = ++_level + "st Floor";
-        
+            LevelNumber.text = ++_level + "st Floor";
             _countWave = 1 + _level / 5;
-        
             NextWave();
         }
     
@@ -64,11 +55,8 @@ namespace Services {
         {
             if (_countWave > 0)
             {
-                enemy = Instantiate(enemyPanel, transform, false).GetComponent<Enemy>();
-                enemy.cardController = cardController;
-                enemy.gameController = this;
-                
-                enemy.Initialize(6);
+                Enemy = Instantiate(EnemyPanel, transform, false).GetComponent<Enemy>();
+                Enemy.Initialize(CardController,this,6);
                 
                 _countWave--;
             }

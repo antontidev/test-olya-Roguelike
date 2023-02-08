@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Characters;
 using DG.Tweening;
 using Services;
 using TMPro;
@@ -116,7 +117,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         
         SetCountOfMoves(_countOfMoves + 1);
 
-        gameController.hero.GetAndRemoveCardFromHand(cardComponent.CardIndex);
+        gameController.Hero.GetAndRemoveCardFromHand(cardComponent.CardIndex);
     }
     
     private void EnemyMove()
@@ -127,9 +128,9 @@ public class DropZone : MonoBehaviour, IDropHandler
 
     private void EnemyAddCardToMove()
     {
-        var numRandomStat = _random.Next(gameController.enemy.GetHandCount());
+        var numRandomStat = _random.Next(gameController.Enemy.GetHandCount());
 
-        var cardStats = gameController.enemy.GetAndRemoveCardFromHand(numRandomStat);
+        var cardStats = gameController.Enemy.GetAndRemoveCardFromHand(numRandomStat);
 
         SetCountOfMoves(_countOfMoves + 1);
         
@@ -140,7 +141,7 @@ public class DropZone : MonoBehaviour, IDropHandler
     {
         _countAddCards = gameController.CurrentMoveCharacter.GetHandCount();
         if (_countAddCards < 6)
-            gameController.CurrentMoveCharacter.SetCardsInHand(6 - _countAddCards);
+            gameController.CurrentMoveCharacter.AddCardsToHand(6 - _countAddCards);
 
     }
     
@@ -155,13 +156,13 @@ public class DropZone : MonoBehaviour, IDropHandler
         if (_moveOfEnemy)
         {
             whoseMove.text = "Ваш ход";
-            gameController.CurrentMoveCharacter = gameController.hero;
+            gameController.CurrentMoveCharacter = gameController.Hero;
             _moveOfEnemy = false;
         }
         else
         {
             whoseMove.text = "Ход врага";
-            gameController.CurrentMoveCharacter = gameController.enemy;
+            gameController.CurrentMoveCharacter = gameController.Enemy;
             _moveOfEnemy = true;
         }
         SetCountOfMoves(0);

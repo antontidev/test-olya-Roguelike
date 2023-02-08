@@ -244,12 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StatusCanvas: {fileID: 3995037992637667938}
   VisualSpawnTransform: {fileID: 859685740908182421}
-  Animator: {fileID: 0}
   CharacterStatusView: {fileID: 2593609832839919166}
-  CardsHand: {fileID: 3995037992649372447}
-  cardMove: {fileID: 3995037992600757684}
-  gameController: {fileID: 0}
-  cardController: {fileID: 1523042514343264069, guid: 10b51a8e91d8de34bb923751089acc23, type: 3}
 --- !u!114 &3995037992649372447
 MonoBehaviour:
   m_ObjectHideFlags: 0

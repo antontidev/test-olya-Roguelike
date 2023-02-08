@@ -1,32 +1,41 @@
 using Cinemachine;
+using DefaultNamespace;
 using UnityEngine;
 
 namespace Services {
     public class CameraBlendService : MonoBehaviour {
+        
         [SerializeField]
-        private CinemachineVirtualCamera _mainCamera, _heroCamera, _enemyCamera;
+        private CinemachineVirtualCamera mainCamera, heroCamera, enemyCamera;
 
-        public int _currentPriority;
-        public int _otherPriority;
+        [SerializeField]
+        private CameraBlendSettings _settings;
+        
+        public CameraSequence StartSequence() {
+            return new CameraSequence(this, _settings);
+        }
+            
+        public int currentPriority;
+        public int otherPriority;
 
-        public CinemachineBlenderSettings BlenderSettings;
+        public CinemachineBlenderSettings blenderSettings;
 
         public void SwitchToMainCamera() {
-            _mainCamera.Priority = _currentPriority;
-            _heroCamera.Priority = _otherPriority;
-            _enemyCamera.Priority = _otherPriority;
+            mainCamera.Priority = currentPriority;
+            heroCamera.Priority = otherPriority;
+            enemyCamera.Priority = otherPriority;
         }
 
         public void SwitchToEnemyCamera() {
-            _enemyCamera.Priority = _currentPriority;
-            _mainCamera.Priority = _otherPriority;
-            _heroCamera.Priority = _otherPriority;
+            enemyCamera.Priority = currentPriority;
+            mainCamera.Priority = otherPriority;
+            heroCamera.Priority = otherPriority;
         }
 
         public void SwitchToHeroCamera() {
-            _heroCamera.Priority = _currentPriority;
-            _mainCamera.Priority = _otherPriority;
-            _enemyCamera.Priority = _otherPriority;
+            heroCamera.Priority = currentPriority;
+            mainCamera.Priority = otherPriority;
+            enemyCamera.Priority = otherPriority;
         }
     }
 }
