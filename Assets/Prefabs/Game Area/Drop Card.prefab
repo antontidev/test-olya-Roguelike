@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 959529024105473987}
+  - component: {fileID: 360131756006646988}
+  - component: {fileID: 5529300301424390696}
+  - component: {fileID: 2593860294356561154}
   - component: {fileID: 959529024105473985}
   - component: {fileID: 959529024105473984}
-  - component: {fileID: 360131756006646988}
   - component: {fileID: 2099499943793259856}
   m_Layer: 5
   m_Name: Drop Card Area
@@ -40,6 +42,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 175}
   m_SizeDelta: {x: 250, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &360131756006646988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959529024105473986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec73bfca970a4d8696bec6d9935f8968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 0}
+  cardController: {fileID: 0}
+  MoveController: {fileID: 5529300301424390696}
+  MoveView: {fileID: 2593860294356561154}
+  CameraBlendService: {fileID: 0}
+--- !u!114 &5529300301424390696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959529024105473986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd251111fb4479e9b5b136ba23ab9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveView: {fileID: 2593860294356561154}
+  GameController: {fileID: 0}
+--- !u!114 &2593860294356561154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959529024105473986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f428b671934129a051a1339fc72dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countOfMovesText: {fileID: 959529024236464219}
+  whoseMove: {fileID: 4987389435491677555}
+  GameController: {fileID: 0}
 --- !u!222 &959529024105473985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -78,22 +126,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &360131756006646988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959529024105473986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec73bfca970a4d8696bec6d9935f8968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameController: {fileID: 0}
-  cardController: {fileID: 0}
-  countOfMovesText: {fileID: 959529024236464219}
-  whoseMove: {fileID: 4987389435491677555}
 --- !u!114 &2099499943793259856
 MonoBehaviour:
   m_ObjectHideFlags: 0
