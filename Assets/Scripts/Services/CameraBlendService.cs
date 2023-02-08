@@ -1,4 +1,5 @@
 using Cinemachine;
+using DefaultNamespace;
 using UnityEngine;
 
 namespace Services {
@@ -10,6 +11,13 @@ namespace Services {
         public int _otherPriority;
 
         public CinemachineBlenderSettings BlenderSettings;
+
+        [SerializeField]
+        public CameraBlendSettings _settings;
+        
+        public CameraSequence StartSequence() {
+            return new CameraSequence(this, _settings);
+        }
 
         public void SwitchToMainCamera() {
             _mainCamera.Priority = _currentPriority;

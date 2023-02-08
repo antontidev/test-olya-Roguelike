@@ -12,9 +12,11 @@ namespace Services {
         private int _level;
         public TextMeshProUGUI levelNumber;
     
+        [Header("Герой")]
         public Hero hero;
         public GameObject heroPanel;
-
+        
+        [Header("Враг")]
         public Enemy enemy;
         public GameObject enemyPanel;
 
@@ -31,21 +33,16 @@ namespace Services {
             cardController.Initialize();
             
             hero = Instantiate(heroPanel, transform, false).GetComponent<Hero>();
-            hero.cardController = cardController;
-            hero.gameController = this;
+            // hero.Initialize(this, cardController, 6);
 
-            var sequence = DOTween.Sequence();
-            
-            CameraBlendService.SwitchToHeroCamera();
-            sequence
-                .AppendInterval(1)
-                .AppendCallback(() => {
-                    CameraBlendService.SwitchToMainCamera();
-                });
-            
+            CameraBlendService
+                .StartSequence()
+                .AppendHeroSwitch()
+                .AppendMainSwitch();
+
             CardsHandView.Initialize(hero.CardsHand, cardController);
             
-            hero.Initialize(6);
+            hero.Initialize(this, cardController,6);
             
             NextLevel();
             CurrentMoveCharacter = hero;
@@ -65,10 +62,7 @@ namespace Services {
             if (_countWave > 0)
             {
                 enemy = Instantiate(enemyPanel, transform, false).GetComponent<Enemy>();
-                enemy.cardController = cardController;
-                enemy.gameController = this;
-                
-                enemy.Initialize(6);
+                enemy.Initialize(this, cardController,6);
                 
                 _countWave--;
             }
@@ -80,6 +74,12 @@ namespace Services {
         public void EndGame()
         {
             SceneManager.LoadScene(2);
+        }
+
+        public void SwitchCurrentMoveCharacter()
+        {
+            if (CurrentMoveCharacter is Hero) CurrentMoveCharacter = enemy;
+            else CurrentMoveCharacter = hero;
         }
     }
 }

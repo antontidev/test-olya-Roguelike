@@ -3,8 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardView : MonoBehaviour,
-                        IPoolReset {
+public class CardView : MonoBehaviour, IPoolReset 
+{
     public CardStats CardStat;
 
     public TextMeshProUGUI title;

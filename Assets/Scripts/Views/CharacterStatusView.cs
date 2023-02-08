@@ -20,7 +20,7 @@ namespace Views {
             _characterHealthView.SetMaxHealth(maxHealth);
         }
 
-        public void SetDefence(int defence) {
+        public void SetDefense(int defence) {
             if (defence > 0) {
                 _characterHealthView.SetSliderColor(_statusViewConfig.ActiveDefenceHealthBarColor);
             }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,37 +24,16 @@ public class Enemy : Character
         Damage = characterStats.Damage;
         SetDefense(characterStats.Defense);
     }
-
-    public override void CardMove(CardView cardView)
+    
+    public override void MakeDamage(int cardDamage)
     {
-        if (cardView.CardStat.Damage != 0)
-        {
-            Animator.SetTrigger("Attack");
-            gameController.hero.GetDamage(Damage * cardView.CardStat.Damage);
-        }
-        if (cardView.CardStat.Heal != 0)
-        {
-            cardMove.text = "+" + cardView.CardStat.Heal + " здоровья";
-            SetHealth(Health + cardView.CardStat.Heal);
-            cardMove.text = "";
-        }
-        if (cardView.CardStat.Defense != 0)
-        {
-            cardMove.text = "+" + cardView.CardStat.Heal + " защиты";
-            SetDefense(Defence + cardView.CardStat.Defense);
-            Animator.SetTrigger("Defence");
-            cardMove.text = "";
-        }
-        if (cardView.CardStat.CountAddCards != 0)
-        {
-            cardMove.text = "+" + cardView.CardStat.Heal + " карты";
-            CardsHand.AddCardsToHand(cardView.CardStat.CountAddCards);
-            cardMove.text = "";
-        }
+        PlayAnimation(Animation.Attack);
+        gameController.hero.GetDamage(Damage * cardDamage);
     }
 
     protected override void IsDie()
     {
+        PlayAnimation(Animation.Death);
         EnemyIsDie = true;
         _destroyEnemy = gameObject;
         gameController.enemy = null;
