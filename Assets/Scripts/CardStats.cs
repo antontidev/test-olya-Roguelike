@@ -11,8 +11,10 @@ public struct CardStats {
     public int Damage;
     public int CountAddCards;
 
+    public float Chance;
+
     public CardStats(int heal, int damage, int defense, int countAddCards, string name, string description,
-        string logoPrefab) {
+        string logoPrefab, float chance) {
         Name = name;
         Description = description;
         LogoPrefab = logoPrefab;
@@ -20,5 +22,6 @@ public struct CardStats {
         Damage = damage;
         Defense = defense;
         CountAddCards = countAddCards;
+        Chance = chance;
     }
 }

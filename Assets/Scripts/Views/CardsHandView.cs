@@ -32,8 +32,8 @@ namespace Views {
             
             _activeViews.Clear();
 
-            for (int i = 0; i < _cardsHand.GetHandCount(); i++) {
-                var cardData = _cardsHand.GetCardData(i);
+            for (int i = 0; i < _cardsHand.GetCountCardsInHand(); i++) {
+                var cardData = _cardsHand.GetCardStats(i);
                 var cardView = _cardController.GetAndFillCardView(cardData);
                 cardView.CardIndex = i;
                 

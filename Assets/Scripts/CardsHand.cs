@@ -6,24 +6,24 @@ using UnityEngine;
 
 namespace DefaultNamespace {
     public class CardsHand : MonoBehaviour {
-        private List<CardStats> _cardsInHand;
+        private List<CardStats> _cardStatsInHand;
         private CardController _cardController;
 
         private Action _onHandChange;
 
         public void Initialize(CardController cardController, int initialHand) {
             _cardController = cardController;
-            _cardsInHand = new List<CardStats>();
+            _cardStatsInHand = new List<CardStats>();
             
             AddCardsToHand(initialHand);
         }
 
-        public int GetHandCount() {
-            return _cardsInHand.Count;
+        public int GetCountCardsInHand() {
+            return _cardStatsInHand.Count;
         }
 
-        public CardStats GetCardData(int index) {
-            return _cardsInHand[index];
+        public CardStats GetCardStats(int index) {
+            return _cardStatsInHand[index];
         }
 
         public void SubscribeOnHandChange(Action callback) {
@@ -35,15 +35,15 @@ namespace DefaultNamespace {
         }
         
         public void AddCardsToHand(int countToAdd) {
-            _cardController.AddCardsToHand(countToAdd, _cardsInHand);
+            _cardController.AddCardsToHand(countToAdd, _cardStatsInHand);
             
             _onHandChange?.Invoke();
         }
 
         public CardStats GetAndRemove(int index) {
-            var stat = _cardsInHand[index];
+            var stat = _cardStatsInHand[index];
 
-            _cardsInHand.RemoveAt(index);
+            _cardStatsInHand.RemoveAt(index);
 
             _onHandChange?.Invoke();
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DG.Tweening;
-using Services;
-using TMPro;
+﻿using Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +6,7 @@ public class DropZone : MonoBehaviour, IDropHandler
 {
     public MoveController MoveController;
     public MoveView MoveView;
+    public GameController GameController;
 
     private GameObject _card;
 
@@ -20,11 +17,10 @@ public class DropZone : MonoBehaviour, IDropHandler
         
         MoveController.CardMoveHero(_card);
 
-        if (Enemy.EnemyIsDie) MoveController.EnemyIsDie();
+        if (GameController.enemy.Died) MoveController.EnemyIsDie();
         
         if (MoveView.GetCountOfMove() < 3) return;
         
         MoveController.NextMove();//ход врага
-        MoveController.NextMove();//запуск хода игрока
     }
 }

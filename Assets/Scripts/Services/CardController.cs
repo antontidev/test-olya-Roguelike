@@ -9,8 +9,6 @@ namespace Services {
     /// </summary>
     public class CardController : MonoBehaviour
     {
-        private static readonly System.Random Random = new();
-
         public CardsFactoryConfig CardsFactoryConfig;
         public CardsImagesConfig CardsImagesConfig;
         public CardsConfig CardsConfig;
@@ -22,6 +20,7 @@ namespace Services {
         private CardsFactory _cardsFactory;
 
         public void Initialize() {
+            CardsConfig.Initialize();
             _cardsFactory = new CardsFactory(CardsFactoryConfig, CardsRoot);
             _cardsFactory.SetInactiveParent(CardsRootInactive);
             _cardsFactory.Initialize();
@@ -48,12 +47,11 @@ namespace Services {
             GetRandomCardsData(countAddCards, cards);
         }
 
-        // TODO add service to randomize on chances
-        private void GetRandomCardsData(int count, List<CardStats> list) {
-            var cardsCount = CardsConfig.GetCardsCount();
-            for (int i = 0; i < count; i++) {
-                var randomIndex = Random.Next(cardsCount);
-                var card = CardsConfig.Config[randomIndex];
+        private void GetRandomCardsData(int count, List<CardStats> list)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                var card = CardsConfig.GetRandomCardStats();
                 list.Add(card);
             }
         }

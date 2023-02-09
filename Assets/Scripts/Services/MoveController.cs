@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace Services
@@ -9,11 +8,10 @@ namespace Services
         private System.Random _random;
         
         private int _countCardInHand;
-        // private GameObject _card;
 
         private Character CurrentMoveCharacter;
-        
-        private List<CardStats> _currentCards;
+
+        private CardView _cardViewEnemy;
 
         public MoveView MoveView;
         public CameraBlendService CameraBlendService;
@@ -23,15 +21,6 @@ namespace Services
         
         private void Awake() {
             _random = new System.Random();
-            _currentCards = new List<CardStats>();
-        }
-        
-        public void CardMoveHero(GameObject card)
-        {
-            card.GetComponent<DragDrop>().defaultParent = transform;
-
-            var cardView = card.GetComponent<CardView>();
-            CardMove(cardView);
         }
 
         public void NextMove()
@@ -44,73 +33,84 @@ namespace Services
         
         private void MoveHero()
         {
-            ActiveCards(true);
-            
-            CameraBlendService
-                .StartSequence()
-                .AppendHeroSwitch()
-                .AppendMainSwitch();
-            
-            СardDistribution();
+            var sequence = DOTween.Sequence();
+
+            sequence.AppendCallback(() =>
+                {
+                    CameraBlendService
+                        .StartSequence()
+                        .AppendHeroSwitch()
+                        .AppendMainSwitch();
+                })
+                .AppendInterval(3)
+                .AppendCallback(() =>
+                {
+                    СardDistribution();
+                    ActiveCards(true);
+                });
+        }
+        
+        public void CardMoveHero(GameObject card)
+        {
+            card.GetComponent<DragDrop>().defaultParent = transform;
+            var cardView = card.GetComponent<CardView>();
+            CardMove(cardView);
+            MoveView.AddCountOfMoves();
+            CurrentMoveCharacter.GetAndRemoveCardFromHand(cardView.CardIndex);
         }
         
         private void MoveEnemy()
         {
             ActiveCards(false);
-            
-            CameraBlendService
-                .StartSequence()
-                .AppendEnemySwitch()
-                .AppendMainSwitch();
-            
             СardDistribution();
             
-            for (var i = 0; i < 3; i++)
-                EnemyAddCardToMove();
+            var sequence = DOTween.Sequence();
+
+            sequence.AppendCallback(() =>
+            {
+                CameraBlendService
+                    .StartSequence()
+                    .AppendEnemySwitch()
+                    .AppendMainSwitch();
+            })
+                .AppendInterval(2);
+            
+            for (int i = 0; i < 3; i++)
+            {
+                sequence
+                    .AppendInterval(1)
+                    .AppendCallback(CardMoveEnemy)
+                    .AppendInterval(1);
+            }
+
+            sequence.AppendCallback(NextMove);
         }
 
-        // private void EnemyCardMove()
-        // {
-        //     var sequence = DOTween.Sequence();
-        //     float cardDelay = 1f;
-        //     for (int i = 0; i < _currentCards.Count; i++) {
-        //         var card = _currentCards[i];
-        //         sequence.AppendCallback(() => {
-        //             if (_lastCardView != null) cardController.ReleaseCardView(_lastCardView);
-        //
-        //             _lastCardView = cardController.GetAndFillCardView(card);
-        //             _lastCardView.transform.SetParent(transform);
-        //
-        //             MoveController.CardMove(_lastCardView.CardStat);
-        //         }).AppendInterval(cardDelay);
-        //     }
-        //
-        //     _currentCards.Clear();
-        //
-        //     sequence.AppendCallback(() => {
-        //         callback?.Invoke();
-        //     
-        //         cardController.ReleaseCardView(_lastCardView);
-        //         MoveController.ActiveCards(true);
-        //     });
-        // }
-        
-        private void EnemyAddCardToMove()
+        private void CardMoveEnemy()
         {
-            var numRandomCard = _random.Next(GameController.enemy.GetHandCount());
+            var numRandomCard = _random.Next(CurrentMoveCharacter.GetCountCardsInHand());
 
-            var cardStats = GameController.enemy.GetAndRemoveCardFromHand(numRandomCard);
+            var cardStats = CurrentMoveCharacter.GetAndRemoveCardFromHand(numRandomCard);
 
-            MoveView.AddCountOfMoves();
+            _cardViewEnemy = CardController.GetAndFillCardView(cardStats);
+            _cardViewEnemy.transform.SetParent(transform);
         
-            _currentCards.Add(cardStats);
+            CardMove(_cardViewEnemy);
+            MoveView.AddCountOfMoves();
+
+            var sequence = DOTween.Sequence();
+
+            sequence.AppendInterval(1)
+                .AppendCallback(() =>
+                {
+                    CardController.ReleaseCardView(_cardViewEnemy);
+                });
         }
         
         private void СardDistribution()
         {
-            _countCardInHand = GameController.CurrentMoveCharacter.GetHandCount();
-            if (_countCardInHand < 6)
-                GameController.CurrentMoveCharacter.SetCardsInHand(6 - _countCardInHand);
+            _countCardInHand = CurrentMoveCharacter.GetCountCardsInHand();
+            CurrentMoveCharacter.AddCardsToHand(6 - _countCardInHand);
         }
 
         private void CardMove(CardView cardView)
@@ -124,23 +124,32 @@ namespace Services
             if (cardStats.Defense != 0)
                 CurrentMoveCharacter.AddDefense(cardStats.Defense);
             if (cardStats.CountAddCards != 0)
-                CurrentMoveCharacter.CardsHand.AddCardsToHand(cardStats.CountAddCards);
-            CurrentMoveCharacter.CardsHand.GetAndRemove(cardView.CardIndex);
-            
-            MoveView.AddCountOfMoves();
+                CurrentMoveCharacter.AddCardsToHand(cardStats.CountAddCards);
         }
 
         public void EnemyIsDie()
         {
             MoveView.SetToZeroCountOfMove();
             СardDistribution();
-            Enemy.EnemyIsDie = false;
+            GameController.enemy.Died = false;
         }
 
         private void ActiveCards(bool activeMove)
         {
             foreach (var dragDrop in CardController.GetComponentsInChildren<DragDrop>())
                 dragDrop.enabled = activeMove;
+
+            float fadeValue;
+            if (activeMove)
+            {
+                fadeValue = 1;
+            }
+            else
+            {
+                fadeValue = 0.5f;
+            }
+
+            CardController.CardsRootCanvasGroup.DOFade(fadeValue, 0.3f);
         }
     }
 }

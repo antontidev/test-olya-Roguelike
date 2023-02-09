@@ -9,8 +9,6 @@ public class Enemy : Character
 
     private GameObject _destroyEnemy;
 
-    public static bool EnemyIsDie;
-
     public override void Start()
     {
         var characterStats = RandomSelection();
@@ -33,12 +31,20 @@ public class Enemy : Character
 
     protected override void IsDie()
     {
-        PlayAnimation(Animation.Death);
-        EnemyIsDie = true;
-        _destroyEnemy = gameObject;
-        gameController.enemy = null;
-        Destroy(_destroyEnemy);
-        gameController.NextWave();
+        Died = true;
+        var sequence = DOTween.Sequence();
+        sequence.AppendCallback(() =>
+            {
+                PlayAnimation(Animation.Death);
+            })
+            .AppendInterval(3)
+            .AppendCallback(() =>
+            {
+                _destroyEnemy = gameObject;
+                gameController.enemy = null;
+                Destroy(_destroyEnemy);
+                gameController.NextWave();
+            });
     }
     
     private CharacterStats RandomSelection()

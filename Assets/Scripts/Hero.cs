@@ -1,7 +1,10 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Hero : Character {
-    public override void Start() {
+
+    public override void Start()
+    {
         var obj = (GameObject)Instantiate(Resources.Load(HeroMap.Heroes[0].SpriteLink), VisualSpawnTransform, false);
 
         obj.transform.localPosition = Vector3.zero;
@@ -22,7 +25,12 @@ public class Hero : Character {
 
     protected override void IsDie()
     {
-        PlayAnimation(Animation.Death);
-        gameController.EndGame();
+        Died = true;
+        var sequence = DOTween.Sequence();
+        sequence.AppendCallback(() =>
+            {
+                PlayAnimation(Animation.Death);
+            })
+            .AppendInterval(5);
     }
 }

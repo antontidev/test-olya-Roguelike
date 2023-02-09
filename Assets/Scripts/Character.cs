@@ -1,14 +1,13 @@
-using System;
 using DefaultNamespace;
-using DG.Tweening;
 using Services;
-using TMPro;
 using UnityEngine;
 using Views;
 
 public abstract class Character : MonoBehaviour
 {
     public Canvas StatusCanvas;
+
+    public bool Died;
 
     protected int MaxHealth;
     protected int Health;
@@ -25,20 +24,20 @@ public abstract class Character : MonoBehaviour
     public GameController gameController;
     public CardController cardController;
 
-    public void Initialize(GameController gameController,
-        CardController cardController, int initialHand)
+    public void Initialize(GameController gameController, CardController cardController, int initialHand)
     {
+        Died = false;
         this.gameController = gameController;
         this.cardController = cardController;
         CardsHand.Initialize(this.cardController, initialHand);
         StatusCanvas.worldCamera = Camera.main;
     }
 
-    public int GetHandCount() {
-        return CardsHand.GetHandCount();
+    public int GetCountCardsInHand() {
+        return CardsHand.GetCountCardsInHand();
     }
 
-    public void SetCardsInHand(int countToAdd) {
+    public void AddCardsToHand(int countToAdd) {
         CardsHand.AddCardsToHand(countToAdd);
     }
 

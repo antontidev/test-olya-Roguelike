@@ -635,6 +635,8 @@ MonoBehaviour:
   _currentPriority: 2
   _otherPriority: 1
   BlenderSettings: {fileID: 11400000, guid: e3d8a780cd6b01e44a5778eb2261c27a, type: 2}
+  _settings:
+    Delay: 1
 --- !u!1 &156102070
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +813,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 154978051}
     m_Modifications:
     - target: {fileID: 360131756006646988, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
+      propertyPath: GameController
+      value: 
+      objectReference: {fileID: 154978052}
+    - target: {fileID: 360131756006646988, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
       propertyPath: cardController
       value: 
       objectReference: {fileID: 1656132305}
@@ -922,6 +928,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drop Card
       objectReference: {fileID: 0}
+    - target: {fileID: 2593860294356561154, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
+      propertyPath: GameController
+      value: 
+      objectReference: {fileID: 154978052}
+    - target: {fileID: 5529300301424390696, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
+      propertyPath: CardController
+      value: 
+      objectReference: {fileID: 1656132305}
+    - target: {fileID: 5529300301424390696, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
+      propertyPath: GameController
+      value: 
+      objectReference: {fileID: 154978052}
+    - target: {fileID: 5529300301424390696, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
+      propertyPath: CameraBlendService
+      value: 
+      objectReference: {fileID: 154978053}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c62bb3a58c687e04dba13c00d2fbffa3, type: 3}
 --- !u!224 &189881840 stripped
@@ -1894,7 +1916,7 @@ MonoBehaviour:
   _mainAreaHeight: 1
   _verticalFOV: 60
   _horizontalFOV: 102.6594
-  _verticalSize: 5.3
+  _verticalSize: 4.353572
   _horizontalSize: 8.3
 --- !u!1 &576978537
 GameObject:
