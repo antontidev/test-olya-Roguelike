@@ -1,4 +1,4 @@
-﻿using UnityEngine.SceneManagement;
+﻿using Services;
 
 namespace Map
 {
@@ -6,7 +6,7 @@ namespace Map
     {
         protected override void Action()
         {
-            //SceneManager.LoadScene(1);
+            GameController.Instance.StartLevel(transform);
         }
     }
 }

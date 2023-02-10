@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5875824348887040428}
-  - component: {fileID: 5875824348887040423}
-  - component: {fileID: 5875824348887040417}
   - component: {fileID: 4848525435769419946}
+  - component: {fileID: 5875824348887040417}
+  - component: {fileID: 5875824348887040423}
   - component: {fileID: 7899367051263070770}
   m_Layer: 5
   m_Name: Battle
@@ -40,14 +40,22 @@ RectTransform:
   m_AnchoredPosition: {x: 495, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5875824348887040423
-CanvasRenderer:
+--- !u!114 &4848525435769419946
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5875824348887040429}
-  m_CullTransparentMesh: 1
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44dad0cb3ab447fb8a2333d7ef115866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hero: {fileID: 0}
+  _previousStation: []
+  _mapController: {fileID: 0}
+  PathLength: 3
 --- !u!114 &5875824348887040417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +96,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 7899367051263070770}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -104,20 +112,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4848525435769419946
-MonoBehaviour:
+--- !u!222 &5875824348887040423
+CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5875824348887040429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44dad0cb3ab447fb8a2333d7ef115866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hero: {fileID: 0}
-  _previousStation: []
+  m_CullTransparentMesh: 1
 --- !u!114 &7899367051263070770
 MonoBehaviour:
   m_ObjectHideFlags: 0

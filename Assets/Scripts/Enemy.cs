@@ -16,17 +16,17 @@ public class Enemy : Character
         var obj = (GameObject)Instantiate(Resources.Load(characterStats.SpriteLink), VisualSpawnTransform, false);
         Animator = obj.GetComponent<Animator>();
         
-        MaxHealth = Health = characterStats.MaxHealth;
+        MaxHealth = Health = characterStats.InitialMaxHealth;
         CharacterStatusView.SetMaxHealth(MaxHealth);
         
-        Damage = characterStats.Damage;
-        SetDefense(characterStats.Defense);
+        Damage = characterStats.InitialDamage;
+        SetDefense(characterStats.InitialDefense);
     }
     
     public override void MakeDamage(int cardDamage)
     {
         PlayAnimation(Animation.Attack);
-        gameController.hero.GetDamage(Damage * cardDamage);
+        BattleController.hero.GetDamage(Damage * cardDamage);
     }
 
     protected override void IsDie()
@@ -41,9 +41,9 @@ public class Enemy : Character
             .AppendCallback(() =>
             {
                 _destroyEnemy = gameObject;
-                gameController.enemy = null;
+                BattleController.enemy = null;
                 Destroy(_destroyEnemy);
-                gameController.NextWave();
+                BattleController.NextWave();
             });
     }
     

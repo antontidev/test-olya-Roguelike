@@ -10,17 +10,17 @@ public class Hero : Character {
         obj.transform.localPosition = Vector3.zero;
         Animator = obj.GetComponent<Animator>();
         
-        MaxHealth = Health = HeroMap.Heroes[0].MaxHealth;
+        MaxHealth = Health = HeroMap.Heroes[0].InitialMaxHealth;
         CharacterStatusView.SetMaxHealth(MaxHealth);
 
-        SetDamage(HeroMap.Heroes[0].Damage);
-        SetDefense(HeroMap.Heroes[0].Defense);
+        SetDamage(HeroMap.Heroes[0].InitialDamage);
+        SetDefense(HeroMap.Heroes[0].InitialDefense);
     }
 
     public override void MakeDamage(int cardDamage)
     {
         PlayAnimation(Animation.Attack);
-        gameController.enemy.GetDamage(Damage * cardDamage);
+        BattleController.enemy.GetDamage(Damage * cardDamage);
     }
 
     protected override void IsDie()
@@ -31,6 +31,6 @@ public class Hero : Character {
             {
                 PlayAnimation(Animation.Death);
             })
-            .AppendInterval(5);
+            .AppendCallback(BattleController.GameLoss);
     }
 }

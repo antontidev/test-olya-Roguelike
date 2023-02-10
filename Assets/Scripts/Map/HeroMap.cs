@@ -1,16 +1,25 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
+using Services;
 using UnityEngine;
 
 namespace Map
 {
     public class HeroMap : MonoBehaviour
     {
-        private Hero _hero;
-        public Station Station;
+        private CharacterStats _heroStats;
         
-        public void Move(Vector3 newPosition)
+        public int StationID;
+
+        private void Awake()
         {
-            transform.DOMove(newPosition, 3f);
+            _heroStats = global::HeroMap.Heroes[0];
+            StationID = GameController.Instance.StationID;
+        }
+
+        public void Move(Vector3 newPosition, float pathLength)
+        {
+            transform.DOMove(newPosition, pathLength);
         }
     }
 }

@@ -1,85 +1,91 @@
-using DG.Tweening;
-using TMPro;
+﻿using DG.Tweening;
+using Map;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Views;
 
-namespace Services {
+namespace Services
+{
     public class GameController : MonoBehaviour
     {
-        private int _countWave;
-    
-        private int _level;
-        public TextMeshProUGUI levelNumber;
-    
-        [Header("Герой")]
-        public Hero hero;
-        public GameObject heroPanel;
-        
-        [Header("Враг")]
-        public Enemy enemy;
-        public GameObject enemyPanel;
+        public static GameController Instance;
 
-        public Character CurrentMoveCharacter;
+        // [HideInInspector]
+        public int LevelNumber;
+        // [HideInInspector]
+        public int StationID;
 
-        public CardsHandView CardsHandView;
-        
-        public DamageService DamageService;
-        public CameraBlendService CameraBlendService;
-        public CardController cardController;
+        [HideInInspector]
+        public MapController MapController;
 
-        public void Awake()
+        private void OnEnable()
         {
-            cardController.Initialize();
+            Instance = this;
             
-            hero = Instantiate(heroPanel, transform, false).GetComponent<Hero>();
-            // hero.Initialize(this, cardController, 6);
+            DontDestroyOnLoad(gameObject);
+            
+            InitializeManager();
 
-            CameraBlendService
-                .StartSequence()
-                .AppendHeroSwitch()
-                .AppendMainSwitch();
+            SceneManager.LoadScene(0);
+        }
+        
+        private void InitializeManager()
+        {
+            LevelNumber = 0;
+            StationID = 0;
 
-            CardsHandView.Initialize(hero.CardsHand, cardController);
-            
-            hero.Initialize(this, cardController,6);
-            
-            NextLevel();
-            CurrentMoveCharacter = hero;
+            transform.position = new Vector3(0, -4, 0);
+
+            Save(transform);
         }
 
-        private void NextLevel()
+        public void StartLevel(Transform currentPlayerPosition)
         {
-            levelNumber.text = ++_level + "st Floor";
-        
-            _countWave = 1 + _level / 5;
-        
-            NextWave();
-        }
-    
-        public void NextWave()
-        {
-            if (_countWave > 0)
-            {
-                enemy = Instantiate(enemyPanel, transform, false).GetComponent<Enemy>();
-                enemy.Initialize(this, cardController,6);
-                
-                _countWave--;
-            }
-            else {
-                NextLevel();
-            }
+            Save(currentPlayerPosition);
+            SceneManager.LoadScene(1);
         }
 
-        public void EndGame()
+        public void LevelWin()
+        {
+            var seq = DOTween.Sequence();
+            seq.AppendCallback(() =>
+                {
+                    SceneManager.LoadScene(0);
+                })
+                .AppendInterval(0)
+                .AppendCallback(() =>
+                {
+                    Load(MapController.Hero.gameObject);
+                });
+        }
+
+        public void LevelLoss()
         {
             SceneManager.LoadScene(2);
         }
 
-        public void SwitchCurrentMoveCharacter()
+        public void Save(Transform currentPlayerPosition)
         {
-            if (CurrentMoveCharacter is Hero) CurrentMoveCharacter = enemy;
-            else CurrentMoveCharacter = hero;
+            transform.position = currentPlayerPosition.position;
+
+            var position = transform.position;
+
+            PlayerPrefs.SetFloat("PosX", position.x); 
+            PlayerPrefs.SetFloat("PosY", position.y);
+            PlayerPrefs.SetFloat("PosZ", position.z); 
+
+            PlayerPrefs.SetInt("LevelNumber", LevelNumber);
+            PlayerPrefs.SetInt("StationID", StationID);
+        }
+	
+        public void Load(GameObject hero)
+        {
+            transform.position = new Vector3(
+                PlayerPrefs.GetFloat("PosX"), 
+                PlayerPrefs.GetFloat("PosY"), 
+                PlayerPrefs.GetFloat("PosZ"));
+
+            LevelNumber = PlayerPrefs.GetInt("LevelNumber");
+            StationID = PlayerPrefs.GetInt("StationID");
         }
     }
 }

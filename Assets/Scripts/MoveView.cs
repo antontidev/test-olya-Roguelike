@@ -1,6 +1,7 @@
 ﻿using Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MoveView : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class MoveView : MonoBehaviour
     [Header("Принадлежность хода")]
     public TextMeshProUGUI whoseMove;
 
-    public GameController GameController;
+    [FormerlySerializedAs("ButtleController")] [FormerlySerializedAs("GameController")] public BattleController BattleController;
     
     public void AddCountOfMoves()
     {
@@ -29,8 +30,8 @@ public class MoveView : MonoBehaviour
 
     public void SwitchMove()
     {
-        GameController.SwitchCurrentMoveCharacter();
-        whoseMove.text = GameController.CurrentMoveCharacter is Enemy ? "Ход врага" : "Ваш ход";
+        BattleController.SwitchCurrentMoveCharacter();
+        whoseMove.text = BattleController.CurrentMoveCharacter is Enemy ? "Ход врага" : "Ваш ход";
         SetToZeroCountOfMove();
     }
 

@@ -614,7 +614,6 @@ MonoBehaviour:
   enemyPanel: {fileID: 1325521754834815909, guid: d7f226d01706ee242abe1fe0b903762b, type: 3}
   CurrentMoveCharacter: {fileID: 0}
   CardsHandView: {fileID: 6450407322457031559}
-  DamageService: {fileID: 0}
   CameraBlendService: {fileID: 154978053}
   cardController: {fileID: 1656132305}
 --- !u!114 &154978053
@@ -1518,7 +1517,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 20
   m_TargetDisplay: 0

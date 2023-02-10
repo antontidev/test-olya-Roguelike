@@ -1,6 +1,6 @@
 ﻿using System;
+using Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Map
 {
@@ -9,10 +9,16 @@ namespace Map
         [Header("Герой")]
         public HeroMap Hero;
         [SerializeField] private GameObject _heroMapPrefab;
-        
-        private void Awake()
+
+        public void Start()
         {
-            // Hero = Instantiate(_heroMapPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<HeroMap>();
+            GameController.Instance.MapController = this;
+            Hero.transform.position = GameController.Instance.transform.position;
+        }
+
+        public void ChangeOnNextLevel()
+        {
+            ++GameController.Instance.LevelNumber;
         }
     }
 }

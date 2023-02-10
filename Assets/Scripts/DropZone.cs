@@ -1,12 +1,13 @@
 ﻿using Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class DropZone : MonoBehaviour, IDropHandler
 {
     public MoveController MoveController;
     public MoveView MoveView;
-    public GameController GameController;
+    [FormerlySerializedAs("ButtleController")] [FormerlySerializedAs("GameController")] public BattleController BattleController;
 
     private GameObject _card;
 
@@ -17,7 +18,7 @@ public class DropZone : MonoBehaviour, IDropHandler
         
         MoveController.CardMoveHero(_card);
 
-        if (GameController.enemy.Died) MoveController.EnemyIsDie();
+        if (BattleController.enemy.Died) MoveController.EnemyIsDie();
         
         if (MoveView.GetCountOfMove() < 3) return;
         

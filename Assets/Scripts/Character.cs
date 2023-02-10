@@ -1,35 +1,36 @@
 using DefaultNamespace;
 using Services;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Views;
 
 public abstract class Character : MonoBehaviour
 {
     public Canvas StatusCanvas;
 
-    public bool Died;
+    private CharacterStats _characterStats;
 
     protected int MaxHealth;
     protected int Health;
     protected int Defence;
     protected int Damage;
+    public bool Died;
 
     public Transform VisualSpawnTransform;
 
     public Animator Animator;
     public CharacterStatusView CharacterStatusView;
     public CardsHand CardsHand;
-    // public TextMeshProUGUI cardMove;
     
-    public GameController gameController;
-    public CardController cardController;
+    public BattleController BattleController;
+    public CardController CardController;
 
-    public void Initialize(GameController gameController, CardController cardController, int initialHand)
+    public void Initialize(BattleController battleController, CardController cardController, int initialHand)
     {
         Died = false;
-        this.gameController = gameController;
-        this.cardController = cardController;
-        CardsHand.Initialize(this.cardController, initialHand);
+        BattleController = battleController;
+        CardController = cardController;
+        CardsHand.Initialize(CardController, initialHand);
         StatusCanvas.worldCamera = Camera.main;
     }
 
@@ -59,8 +60,8 @@ public abstract class Character : MonoBehaviour
         }
     }
     public abstract void MakeDamage(int cardDamage);
-    
-    public void SetDamage(int damage)
+
+    protected void SetDamage(int damage)
     {
         Damage = damage;
     }
@@ -70,11 +71,13 @@ public abstract class Character : MonoBehaviour
     {
         SetHealth(Health+addHealth);
     }
-    public void ReduceHealth(int reduceHealth)
+
+    private void ReduceHealth(int reduceHealth)
     {
         SetHealth(Health-reduceHealth);
     }
-    protected void SetHealth(int health)
+
+    private void SetHealth(int health)
     {
         Health = (health>MaxHealth?MaxHealth:health);
         
@@ -88,7 +91,8 @@ public abstract class Character : MonoBehaviour
     {
         SetDefense(Defence+addDefense);
     }
-    public void ReduceDefense(int reduceDefense)
+
+    private void ReduceDefense(int reduceDefense)
     {
         SetDefense(Defence-reduceDefense);
     }

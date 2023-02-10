@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Services
 {
@@ -16,7 +17,7 @@ namespace Services
         public MoveView MoveView;
         public CameraBlendService CameraBlendService;
         
-        public GameController GameController;
+        [FormerlySerializedAs("ButtleController")] [FormerlySerializedAs("GameController")] public BattleController BattleController;
         public CardController CardController;
         
         private void Awake() {
@@ -26,7 +27,7 @@ namespace Services
         public void NextMove()
         {
             MoveView.SwitchMove();
-            CurrentMoveCharacter = GameController.CurrentMoveCharacter;
+            CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
             if (CurrentMoveCharacter is Enemy) MoveEnemy();
             else MoveHero();
         }
@@ -116,7 +117,7 @@ namespace Services
         private void CardMove(CardView cardView)
         {
             var cardStats = cardView.CardStat;
-            CurrentMoveCharacter = GameController.CurrentMoveCharacter;
+            CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
             if (cardStats.Damage != 0)
                 CurrentMoveCharacter.MakeDamage(cardStats.Damage);
             if (cardStats.Heal != 0)
@@ -131,13 +132,12 @@ namespace Services
         {
             MoveView.SetToZeroCountOfMove();
             СardDistribution();
-            GameController.enemy.Died = false;
+            BattleController.enemy.Died = false;
         }
 
         private void ActiveCards(bool activeMove)
         {
-            foreach (var dragDrop in CardController.GetComponentsInChildren<DragDrop>())
-                dragDrop.enabled = activeMove;
+            CardController.CardsRootCanvasGroup.blocksRaycasts = activeMove;
 
             float fadeValue;
             if (activeMove)
