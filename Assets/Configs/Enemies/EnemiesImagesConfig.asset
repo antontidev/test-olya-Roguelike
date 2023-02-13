@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: EnemiesImagesConfig
   m_EditorClassIdentifier: 
   Config:
-    _keys: []
-    _values: []
+    _keys:
+    - scelet
+    _values:
+    - {fileID: -1701804965, guid: d0a0978f413ce4d42a855e6dd6538a0e, type: 3}

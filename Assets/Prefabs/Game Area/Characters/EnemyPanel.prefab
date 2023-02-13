@@ -183,13 +183,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StatusCanvas: {fileID: 6108764378923977783}
+  Died: 0
   VisualSpawnTransform: {fileID: 6774340797305437542}
   Animator: {fileID: 0}
   CharacterStatusView: {fileID: 5855177334379377290}
   CardsHand: {fileID: 500132575723106992}
-  cardMove: {fileID: 8866538212817240269}
-  gameController: {fileID: 7289686699546836507, guid: 92fa3529633cf714c983e783d6df08af, type: 3}
-  cardController: {fileID: 7586832408351765095, guid: 92fa3529633cf714c983e783d6df08af, type: 3}
+  BattleController: {fileID: 0}
+  CardController: {fileID: 0}
+  EnemiesImagesConfigImagesConfig: {fileID: 11400000, guid: b42bd157d1067af46b46ccf1730753c7, type: 2}
+  EnemiesConfig: {fileID: 11400000, guid: 9bde43e5f672c5d4591837594f35ebfd, type: 2}
 --- !u!114 &500132575723106992
 MonoBehaviour:
   m_ObjectHideFlags: 0
