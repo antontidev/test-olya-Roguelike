@@ -31,15 +31,9 @@ namespace Configs.Enemies {
             return Config.Count;
         }
     
-        public CharacterStats[] GetRandomEnemy()
+        public CharacterStats GetRandomEnemy()
         {
-            CharacterStats[] randomEnemyStats;
-            
-            //TODO условия генерации одного или двух врагов в зависимости от уровня игры
-            randomEnemyStats = true ? new CharacterStats[2] : new CharacterStats[1];
-            for (var i = 0; i < randomEnemyStats.Length; i++)
-                randomEnemyStats[i] = _enemiesList[_random.Next(_enemiesList.Count)].CharacterStats;
-            return randomEnemyStats;
+            return _enemiesList[_random.Next(_enemiesList.Count)].CharacterStats;
         }
 
         private void CorrectChance()

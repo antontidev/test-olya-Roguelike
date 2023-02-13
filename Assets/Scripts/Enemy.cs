@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using DG.Tweening;
-using Unity.VisualScripting;
+using Configs.Enemies;
 using UnityEngine;
 
 public class Enemy : Character
@@ -8,6 +6,10 @@ public class Enemy : Character
     private readonly System.Random _random = new();
 
     private GameObject _destroyEnemy;
+
+    // public EnemiesAnimatorConfig EnemiesAnimatorConfig;
+    public EnemiesImagesConfig EnemiesImagesConfigImagesConfig;
+    public EnemiesConfig EnemiesConfig;
 
     public override void Start()
     {
@@ -41,6 +43,6 @@ public class Enemy : Character
     
     private CharacterStats RandomSelection()
     {
-        return EnemyMap.Enemies[_random.Next(EnemyMap.Enemies.Count)];
+        return EnemiesConfig.GetRandomEnemy();
     }
 }

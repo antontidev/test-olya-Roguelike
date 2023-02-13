@@ -18,6 +18,25 @@ public struct CharacterStats
     public string SpriteLink;
     public string AnimatorLink;
     
+    public CharacterStats(int initialMaxHealth, int initialDamage, int initialDefense, 
+        string spriteLink, string animatorLink)
+    {
+        InitialMaxHealth = initialMaxHealth;
+        InitialDamage = initialDamage;
+        InitialDefense = initialDefense;
+        SpriteLink = spriteLink;
+        AnimatorLink = animatorLink;
+        
+        PermanentBuffMaxHealth = 0;
+        TemporaryBuffMaxHealth = 0;
+        
+        PermanentBuffDefense = 0;
+        TemporaryBuffDefense = 0;
+        
+        PermanentBuffDamage = 0;
+        TemporaryBuffDamage = 0;
+    }
+
     public int GetMaxHealth()
     {
         return InitialMaxHealth + PermanentBuffMaxHealth + TemporaryBuffMaxHealth;
