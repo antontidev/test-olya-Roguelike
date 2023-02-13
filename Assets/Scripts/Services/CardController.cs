@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Configs;
+using Configs.Cards;
 using Factory;
 using UnityEngine;
 

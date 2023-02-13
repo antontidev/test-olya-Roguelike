@@ -8,12 +8,10 @@ public abstract class Character : MonoBehaviour
 {
     public Canvas StatusCanvas;
 
-    private CharacterStats _characterStats;
+    protected CharacterStats _characterStats;
 
-    protected int MaxHealth;
     protected int Health;
     protected int Defence;
-    protected int Damage;
     public bool Died;
 
     public Transform VisualSpawnTransform;
@@ -61,25 +59,18 @@ public abstract class Character : MonoBehaviour
     }
     public abstract void MakeDamage(int cardDamage);
 
-    protected void SetDamage(int damage)
-    {
-        Damage = damage;
-    }
-    
     
     public void AddHealth(int addHealth)
     {
         SetHealth(Health+addHealth);
     }
-
     private void ReduceHealth(int reduceHealth)
     {
         SetHealth(Health-reduceHealth);
     }
-
     private void SetHealth(int health)
     {
-        Health = (health>MaxHealth?MaxHealth:health);
+        Health = (health>_characterStats.GetMaxHealth()?_characterStats.GetMaxHealth():health);
         
         CharacterStatusView.SetHealth(Health);
 
@@ -91,7 +82,6 @@ public abstract class Character : MonoBehaviour
     {
         SetDefense(Defence+addDefense);
     }
-
     private void ReduceDefense(int reduceDefense)
     {
         SetDefense(Defence-reduceDefense);

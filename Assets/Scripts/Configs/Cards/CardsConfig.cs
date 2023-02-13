@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 // ReSharper disable StringLiteralTypo
 
-namespace Configs {
+namespace Configs.Cards {
     [CreateAssetMenu(menuName = "Configs/Cards/Cards config", fileName = "CardsConfig")]
     public class CardsConfig : ScriptableObject {
         public List<CardStats> Config;

@@ -1,4 +1,4 @@
-﻿using Configs;
+﻿using Configs.Cards;
 using Core;
 using Core.Pools;
 using Core.Pools.Base;

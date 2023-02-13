@@ -46,7 +46,7 @@ namespace Services {
 
         private void NextLevel()
         {
-            levelNumber.text = GameController.Instance.LevelNumber + "st Floor";
+            // levelNumber.text = GameController.Instance.LevelNumber + "st Floor";
         
             _countWave = 1 + GameController.Instance.LevelNumber / 5;
         

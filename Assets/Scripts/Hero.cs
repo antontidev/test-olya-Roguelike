@@ -5,32 +5,29 @@ public class Hero : Character {
 
     public override void Start()
     {
-        var obj = (GameObject)Instantiate(Resources.Load(HeroMap.Heroes[0].SpriteLink), VisualSpawnTransform, false);
-
-        obj.transform.localPosition = Vector3.zero;
-        Animator = obj.GetComponent<Animator>();
+        _characterStats = HeroMap.Heroes[0];
         
-        MaxHealth = Health = HeroMap.Heroes[0].InitialMaxHealth;
-        CharacterStatusView.SetMaxHealth(MaxHealth);
+        Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
 
-        SetDamage(HeroMap.Heroes[0].InitialDamage);
-        SetDefense(HeroMap.Heroes[0].InitialDefense);
+        // obj.transform.localPosition = Vector3.zero;
+        Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
+
+        Health = _characterStats.GetMaxHealth();
+        CharacterStatusView.SetMaxHealth(Health);
+
+        SetDefense(_characterStats.GetDefence());
     }
 
     public override void MakeDamage(int cardDamage)
     {
         PlayAnimation(Animation.Attack);
-        BattleController.enemy.GetDamage(Damage * cardDamage);
+        BattleController.enemy.GetDamage(_characterStats.GetDamage() * cardDamage);
     }
 
     protected override void IsDie()
     {
         Died = true;
-        var sequence = DOTween.Sequence();
-        sequence.AppendCallback(() =>
-            {
-                PlayAnimation(Animation.Death);
-            })
-            .AppendCallback(BattleController.GameLoss);
+        PlayAnimation(Animation.Death);
+        BattleController.GameLoss();
     }
 }

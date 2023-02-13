@@ -11,40 +11,32 @@ public class Enemy : Character
 
     public override void Start()
     {
-        var characterStats = RandomSelection();
+        _characterStats = RandomSelection();
         
-        var obj = (GameObject)Instantiate(Resources.Load(characterStats.SpriteLink), VisualSpawnTransform, false);
-        Animator = obj.GetComponent<Animator>();
+        var obj = (GameObject)Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
         
-        MaxHealth = Health = characterStats.InitialMaxHealth;
-        CharacterStatusView.SetMaxHealth(MaxHealth);
+        Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
         
-        Damage = characterStats.InitialDamage;
-        SetDefense(characterStats.InitialDefense);
+        Health = _characterStats.GetMaxHealth();
+        CharacterStatusView.SetMaxHealth(Health);
+        
+        SetDefense(_characterStats.GetDefence());
     }
     
     public override void MakeDamage(int cardDamage)
     {
         PlayAnimation(Animation.Attack);
-        BattleController.hero.GetDamage(Damage * cardDamage);
+        BattleController.hero.GetDamage(_characterStats.GetDamage() * cardDamage);
     }
 
     protected override void IsDie()
     {
         Died = true;
-        var sequence = DOTween.Sequence();
-        sequence.AppendCallback(() =>
-            {
-                PlayAnimation(Animation.Death);
-            })
-            .AppendInterval(3)
-            .AppendCallback(() =>
-            {
-                _destroyEnemy = gameObject;
-                BattleController.enemy = null;
-                Destroy(_destroyEnemy);
-                BattleController.NextWave();
-            });
+        PlayAnimation(Animation.Death);
+        _destroyEnemy = gameObject;
+        BattleController.enemy = null;
+        Destroy(_destroyEnemy);
+        BattleController.NextWave();
     }
     
     private CharacterStats RandomSelection()
