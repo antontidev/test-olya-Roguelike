@@ -37,6 +37,7 @@ namespace Map
                 .AppendCallback(() =>
                 {
                     _mapController.Hero.StationID = ID;
+                    GameController.Instance.StationID = _mapController.Hero.StationID;
                 })
                 .AppendCallback(_mapController.ChangeOnNextLevel)
                 .AppendCallback(Action);

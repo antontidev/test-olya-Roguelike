@@ -190,7 +190,6 @@ MonoBehaviour:
   CardsHand: {fileID: 500132575723106992}
   BattleController: {fileID: 0}
   CardController: {fileID: 0}
-  EnemiesImagesConfigImagesConfig: {fileID: 11400000, guid: b42bd157d1067af46b46ccf1730753c7, type: 2}
   EnemiesConfig: {fileID: 11400000, guid: 9bde43e5f672c5d4591837594f35ebfd, type: 2}
 --- !u!114 &500132575723106992
 MonoBehaviour:
