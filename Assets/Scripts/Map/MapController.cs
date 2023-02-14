@@ -10,7 +10,10 @@ namespace Map
         public HeroMap Hero;
         [SerializeField] private GameObject _heroMapPrefab;
 
-        public void Start()
+        [SerializeField]
+        private GameObject _shop;
+
+        private void Start()
         {
             GameController.Instance.MapController = this;
             Hero.transform.position = GameController.Instance.transform.position;
@@ -19,6 +22,12 @@ namespace Map
         public void ChangeOnNextLevel()
         {
             ++GameController.Instance.LevelNumber;
+        }
+
+
+        public void OpenShop()
+        {
+            _shop.SetActive(true);
         }
     }
 }
