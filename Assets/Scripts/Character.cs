@@ -53,7 +53,7 @@ public abstract class Character : MonoBehaviour
         else
         {
             PlayAnimation(Animation.Damage);
-            ReduceHealth(damage-Defence);
+            ReduceHealth(damage - Defence);
             SetDefense(0);
         }
     }
@@ -62,15 +62,15 @@ public abstract class Character : MonoBehaviour
     
     public void AddHealth(int addHealth)
     {
-        SetHealth(Health+addHealth);
+        SetHealth(Health + addHealth);
     }
     private void ReduceHealth(int reduceHealth)
     {
-        SetHealth(Health-reduceHealth);
+        SetHealth(Health - reduceHealth);
     }
     private void SetHealth(int health)
     {
-        Health = (health>_characterStats.GetMaxHealth()?_characterStats.GetMaxHealth():health);
+        Health = (health > _characterStats.GetMaxHealth()?_characterStats.GetMaxHealth():health);
         
         CharacterStatusView.SetHealth(Health);
 
@@ -80,15 +80,15 @@ public abstract class Character : MonoBehaviour
     
     public void AddDefense(int addDefense)
     {
-        SetDefense(Defence+addDefense);
+        SetDefense(Defence + addDefense);
     }
     private void ReduceDefense(int reduceDefense)
     {
-        SetDefense(Defence-reduceDefense);
+        SetDefense(Defence - reduceDefense);
     }
     protected void SetDefense(int defense)
     {
-        Defence = (defense<0?0:defense);
+        Defence = (defense < 0 ? 0 : defense);
         CharacterStatusView.SetDefense(Defence);
     }
 

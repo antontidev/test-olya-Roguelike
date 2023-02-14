@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4913228035642053530}
   - component: {fileID: 4255623945486409815}
   m_Layer: 5
-  m_Name: CardLabel
+  m_Name: BonusName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7598237137211545590}
   - component: {fileID: 8629727273557802822}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 7749495085575752100}
   - component: {fileID: 3496658127364881178}
   m_Layer: 5
-  m_Name: CardSelectButton
+  m_Name: BonusSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,8 +404,9 @@ GameObject:
   - component: {fileID: 7203413979548056460}
   - component: {fileID: 7203413979548056461}
   - component: {fileID: 1239339377411882559}
+  - component: {fileID: 8946825629525537123}
   m_Layer: 5
-  m_Name: CardPrefab
+  m_Name: Bonus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,3 +487,20 @@ MonoBehaviour:
   CardLabel: {fileID: 4255623945486409815}
   ButtonLabel: {fileID: 8629727273557802822}
   Image: {fileID: 7203413979548056461}
+--- !u!114 &8946825629525537123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203413979548056463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489401b528ef22c498915297eafc3f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefenceBuff: 0
+  DamageBuff: 0
+  HealthBuff: 0
+  BonusImage: {fileID: 7203413979548056461}
+  Name: super bonus
