@@ -404,7 +404,6 @@ GameObject:
   - component: {fileID: 7203413979548056460}
   - component: {fileID: 7203413979548056461}
   - component: {fileID: 1239339377411882559}
-  - component: {fileID: 8946825629525537123}
   m_Layer: 5
   m_Name: Bonus
   m_TagString: Untagged
@@ -484,23 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc61f762f58a4145a712b9868ca8c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardLabel: {fileID: 4255623945486409815}
-  ButtonLabel: {fileID: 8629727273557802822}
-  Image: {fileID: 7203413979548056461}
---- !u!114 &8946825629525537123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7203413979548056463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 489401b528ef22c498915297eafc3f68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefenceBuff: 0
-  DamageBuff: 0
-  HealthBuff: 0
-  BonusImage: {fileID: 7203413979548056461}
-  Name: super bonus
+  _cardLabel: {fileID: 4255623945486409815}
+  _buttonLabel: {fileID: 8629727273557802822}
+  _image: {fileID: 7203413979548056461}

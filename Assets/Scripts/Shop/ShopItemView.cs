@@ -8,10 +8,41 @@ namespace Cards
 {
     public class ShopItemView : MonoBehaviour
     {
-        public TMP_Text CardLabel;
+        [SerializeField]
+        private TMP_Text _cardLabel;
 
-        public TMP_Text ButtonLabel;
+        [SerializeField]
+        private TMP_Text _buttonLabel;
 
-        public Image Image;
+        [SerializeField]
+        private Image _image;
+
+        private int _defence;
+
+        private int _damage;
+
+        private int _health;
+        public void Initialize(BonusStats stats)
+        {
+            _cardLabel.text = stats.Name;
+            _image = stats.BonusImage;
+            _defence = stats.DefenceBuff;
+            _damage = stats.DamageBuff;
+            _health = stats.HealthBuff;
+        }
+        public void SetName(string cardLabel)
+        {
+            _cardLabel.text = cardLabel;
+        }
+
+        public void SetButtonLabel(string buttonLabel)
+        {
+            _buttonLabel.text = buttonLabel;
+        }
+
+        public void SetImage(Image image)
+        {
+            _image = image;
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Configs.Bonus
             _random = new System.Random();
             _bonusesList = new();
 
-            if (!IsCorrectChance())
+            if (!IsCorrectChance()) return;
            
             for (int i = 0; i < Config.Count; i++)
             {
@@ -30,6 +30,11 @@ namespace Configs.Bonus
         
         }
 
+        public BonusStats GetRandomBonusItem()
+        {
+            return _bonusesList[_random.Next(_bonusesList.Count)];  
+        }
+
         private bool IsCorrectChance()
         {
             var chance = 0f;
@@ -37,7 +42,8 @@ namespace Configs.Bonus
             {
                 chance += item.Chance;
             }
-            return Mathf.Abs(chance - 100f) < 0.001;
+            var returnValue = Mathf.Abs(chance - 100f) < 0.001;
+            return returnValue;
             throw new ArgumentException("Некорректная вероятность выпадения карт");
         }
     }

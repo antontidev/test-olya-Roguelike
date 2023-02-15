@@ -765,6 +765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c9f736df100a64ba3adad2ad11c630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countCards: 3
+  BonusConfig: {fileID: 11400000, guid: c58926269617e7448820d01147c79637, type: 2}
+  BonusPrefab: {fileID: 1239339377411882559, guid: a460f8c78d1b2714d85cea03dca1d208, type: 3}
 --- !u!224 &1078564894 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5875824348887040428, guid: c31cbc9797d79e249be5fe03c7142395, type: 3}

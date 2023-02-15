@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: BonusConfig
   m_EditorClassIdentifier: 
   Config:
-  - DefenceBuff: 0
+  - DefenceBuff: 1
+    DamageBuff: 2
+    HealthBuff: 1
+    BonusImage: {fileID: 0}
+    Name: one
+    Chance: 50
+  - DefenceBuff: 2
+    DamageBuff: 2
+    HealthBuff: 2
+    BonusImage: {fileID: 0}
+    Name: two
+    Chance: 25
+  - DefenceBuff: 5
     DamageBuff: 0
     HealthBuff: 0
     BonusImage: {fileID: 0}
-    Name: 
-    Chance: 0
+    Name: three
+    Chance: 25
