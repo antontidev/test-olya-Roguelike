@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,18 +18,27 @@ namespace Cards
         [SerializeField]
         private Image _image;
 
+        public Button button;
+
         private int _defence;
 
         private int _damage;
 
         private int _health;
-        public void Initialize(BonusStats stats)
+
+        private BonusStats _bonusStats;
+        
+        public void Initialize(BonusStats stats, int index, Action<int> callback = null)
         {
             _cardLabel.text = stats.Name;
             _image = stats.BonusImage;
             _defence = stats.DefenceBuff;
             _damage = stats.DamageBuff;
             _health = stats.HealthBuff;
+            _bonusStats = stats;
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => callback?.Invoke(index));
         }
         public void SetName(string cardLabel)
         {

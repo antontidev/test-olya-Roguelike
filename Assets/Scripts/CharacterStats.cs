@@ -37,6 +37,12 @@ public struct CharacterStats
         TemporaryBuffDamage = 0;
     }
 
+    public void BuffStats(BonusStats stats)
+    {
+        ChangePermanentBuffMaxHealth(stats.HealthBuff);
+        ChangePermanentBuffDamage(stats.DamageBuff);
+        ChangePermanentBuffDefence(stats.DefenceBuff);
+    }
     public int GetMaxHealth()
     {
         return InitialMaxHealth + PermanentBuffMaxHealth + TemporaryBuffMaxHealth;
@@ -74,5 +80,10 @@ public struct CharacterStats
     public int GetDefence()
     {
         return InitialDefense + PermanentBuffDefense + TemporaryBuffDefense;
+    }
+
+    public void ChangePermanentBuffDefence(int changeDefence)
+    {
+        PermanentBuffDefense += changeDefence;
     }
 }

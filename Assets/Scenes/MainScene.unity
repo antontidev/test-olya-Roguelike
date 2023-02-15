@@ -768,6 +768,13 @@ MonoBehaviour:
   countCards: 3
   BonusConfig: {fileID: 11400000, guid: c58926269617e7448820d01147c79637, type: 2}
   BonusPrefab: {fileID: 1239339377411882559, guid: a460f8c78d1b2714d85cea03dca1d208, type: 3}
+  pickedBonus:
+    DefenceBuff: 0
+    DamageBuff: 0
+    HealthBuff: 0
+    BonusImage: {fileID: 0}
+    Name: 
+    Chance: 0
 --- !u!224 &1078564894 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5875824348887040428, guid: c31cbc9797d79e249be5fe03c7142395, type: 3}
@@ -945,9 +952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b39d9974b49fa4fb1601db6b837bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardPrefab: {fileID: 0}
+  CardPrefab: {fileID: 7203413979548056463, guid: a460f8c78d1b2714d85cea03dca1d208, type: 3}
   ChooseCount: 0
-  CardsRoot: {fileID: 930744710}
+  CardsRoot: {fileID: 930744713}
   Header: {fileID: 1430527696}
   Background: {fileID: 84714174}
 --- !u!1 &1430527695
@@ -1427,7 +1434,7 @@ PrefabInstance:
     - target: {fileID: 5454927148807280893, guid: 84fb89c59f29be54cb43815ba1bc9849, type: 3}
       propertyPath: _shop
       value: 
-      objectReference: {fileID: 1423357484}
+      objectReference: {fileID: 1423357489}
     - target: {fileID: 5454927148807280894, guid: 84fb89c59f29be54cb43815ba1bc9849, type: 3}
       propertyPath: m_RootOrder
       value: 5

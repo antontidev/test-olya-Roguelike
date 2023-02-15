@@ -12,11 +12,12 @@ namespace Cards
         public GameObject CardPrefab;
         public int ChooseCount;
 
-        public GameObject CardsRoot;
+        public ItemManager CardsRoot;
 
         public TMP_Text Header;
 
         public Image Background;
+
 
     }
 }
