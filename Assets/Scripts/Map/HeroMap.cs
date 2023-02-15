@@ -7,13 +7,14 @@ namespace Map
 {
     public class HeroMap : MonoBehaviour
     {
-        private CharacterStats _heroStats;
+        [HideInInspector]
+        public CharacterStats HeroStats;
         
         public int StationID;
 
         private void Awake()
         {
-            _heroStats = global::HeroMap.Heroes[0];
+            HeroStats = global::HeroMap.Heroes[0];
             StationID = GameController.Instance.StationID;
         }
 

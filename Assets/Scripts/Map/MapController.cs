@@ -1,4 +1,5 @@
 ﻿using System;
+using Cards;
 using Services;
 using UnityEngine;
 
@@ -11,8 +12,9 @@ namespace Map
         [SerializeField] private GameObject _heroMapPrefab;
 
         [SerializeField]
-        private GameObject _shop;
+        private ShopMenu _shop;
 
+        
         private void Start()
         {
             GameController.Instance.MapController = this;
@@ -27,7 +29,14 @@ namespace Map
 
         public void OpenShop()
         {
-            _shop.SetActive(true);
+            _shop.gameObject.SetActive(true);
+            _shop.CardsRoot.SubscribeOnBonusPicked(BuffHeroWithBonuses);
+        }
+
+        public void BuffHeroWithBonuses()
+        {
+            BonusStats pickedBonus = _shop.CardsRoot.pickedBonus;
+            Hero.HeroStats.BuffStats(pickedBonus);
         }
     }
 }
