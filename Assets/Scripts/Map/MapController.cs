@@ -10,6 +10,7 @@ namespace Map
         [Header("Герой")]
         public HeroMap Hero;
         [SerializeField] private GameObject _heroMapPrefab;
+        public Transform Camera;
 
         [SerializeField]
         private ShopMenu _shop;
@@ -19,6 +20,7 @@ namespace Map
         {
             GameController.Instance.MapController = this;
             Hero.transform.position = GameController.Instance.transform.position;
+            Camera.transform.position = new Vector3(0, Hero.transform.position.y + 4, -10);
         }
 
         public void ChangeOnNextLevel()

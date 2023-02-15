@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hero : Character {
@@ -7,10 +8,11 @@ public class Hero : Character {
     {
         _characterStats = HeroMap.Heroes[0];
         
-        Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
+        var obj = Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
 
         // obj.transform.localPosition = Vector3.zero;
-        Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
+        // Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
+        Animator = obj.GameObject().GetComponent<Animator>();
 
         Health = _characterStats.GetMaxHealth();
         CharacterStatusView.SetMaxHealth(Health);
