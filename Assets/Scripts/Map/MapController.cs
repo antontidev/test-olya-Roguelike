@@ -39,7 +39,7 @@ namespace Map
         {
             BonusStats pickedBonus = _shop.CardsRoot.pickedBonus;
             _shop.CardsRoot.UnSubscribeOnBonusPicked(BuffHeroWithBonuses);
-            Hero.HeroStats.BuffStats(pickedBonus);
+            GameController.Instance.CharacterStats.BuffStats(pickedBonus);
             _shop.gameObject.SetActive(false);
         }
     }
