@@ -42,20 +42,18 @@ public class Enemy : Character
         SetDefense(_characterStats.GetDefence());
     }
     
-    public void MakeDamage(int cardDamage)
-    {
-        PlayAnimation(Animation.Attack);
-        BattleController.Hero.GetDamage(_characterStats.GetDamage() * cardDamage);
-    }
+    // public void MakeDamage(int cardDamage)
+    // {
+    //     PlayAnimation(Animation.Attack);
+    //     BattleController.Hero.GetDamage(_characterStats.GetDamage() * cardDamage);
+    // }
 
     protected override void IsDie()
     {
         Died = true;
         PlayAnimation(Animation.Death);
-        _destroyEnemy = gameObject;
-        BattleController.Enemy = null;
-        Destroy(_destroyEnemy);
-        BattleController.NextWave();
+        BattleController.Enemy.Remove(this);
+        Destroy(gameObject);
     }
     
     private CharacterStats RandomSelection()

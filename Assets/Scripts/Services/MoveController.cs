@@ -129,24 +129,21 @@ namespace Services
         {
             BattleController.MoveView.SetToZeroCountOfMove();
             СardDistribution();
-            BattleController.Enemy[0].Died = false;
+            // foreach (var enemy in BattleController.Enemy)
+            // {
+            //     enemy.Died = false;
+            // }
+            BattleController.NextWave();
         }
 
         private void ActiveCards(bool activeMove)
         {
             BattleController.CardController.CardsRootCanvasGroup.blocksRaycasts = activeMove;
 
-            float fadeValue;
             if (activeMove)
-            {
-                fadeValue = 1;
-            }
+                BattleController.CardController.CardsRootCanvasGroup.DOFade(1, 0.3f);
             else
-            {
-                fadeValue = 0.5f;
-            }
-
-            BattleController.CardController.CardsRootCanvasGroup.DOFade(fadeValue, 0.3f);
+                BattleController.CardController.CardsRootCanvasGroup.DOFade(0.5f, 0.3f);
         }
     }
 }

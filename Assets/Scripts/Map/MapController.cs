@@ -22,10 +22,10 @@ namespace Map
             Camera.transform.position = new Vector3(0, Hero.transform.position.y + 4, -10);
         }
 
-        public void ChangeOnNextLevel()
-        {
-            ++GameController.Instance.LevelNumber;
-        }
+        // public void ChangeOnNextLevel()
+        // {
+        //     ++GameController.Instance.LevelNumber;
+        // }
 
 
         public void OpenShop()

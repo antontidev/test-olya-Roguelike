@@ -1,7 +1,6 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Views;
 
 namespace Services {
@@ -20,7 +19,7 @@ namespace Services {
         
         [Header("Враг")]
         [HideInInspector] 
-        public Enemy[] Enemy;
+        public List<Enemy> Enemy;
         [SerializeField] private GameObject _enemyPanel;
         private int EnemiesTurn;
         
@@ -61,13 +60,18 @@ namespace Services {
     
         public void NextWave()
         {
-            Enemy = false ? new Enemy[2] : new Enemy[1];
+            var random = new System.Random();
+            var countEnemy = random.Next(1,4);
             EnemiesTurn = 0;
             if (_countWave > 0)
             {
-                for (var i = 0; i < Enemy.Length; i++)
+                for (var i = 0; i < countEnemy; i++)
                 {
-                    Enemy[i] = Instantiate(_enemyPanel, transform, false).GetComponent<Enemy>();
+                    var enemy = Instantiate(_enemyPanel, transform, false);
+                    enemy.gameObject.transform.position = new Vector3(enemy.gameObject.transform.position.x + i*3f,
+                        enemy.gameObject.transform.position.y, 0);
+                    
+                    Enemy.Add(enemy.GetComponent<Enemy>());
                     Enemy[i].Initialize(this, 6);
                 }
                 
@@ -85,7 +89,7 @@ namespace Services {
         public void SwitchCurrentMoveCharacter()
         {
             if (CurrentMoveCharacter is Hero)
-                CurrentMoveCharacter = (EnemiesTurn == Enemy.Length - 1) ? Enemy[EnemiesTurn = 0] : Enemy[++EnemiesTurn];
+                CurrentMoveCharacter = ((EnemiesTurn >= Enemy.Count - 1) ? Enemy[EnemiesTurn = 0] : Enemy[++EnemiesTurn]);
             else CurrentMoveCharacter = Hero;
         }
     }

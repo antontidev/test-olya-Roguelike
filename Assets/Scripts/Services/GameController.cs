@@ -48,14 +48,15 @@ namespace Services
                     break;
                 case global::EndLevel.Loss:
                     SceneManager.LoadScene(2);
+                    Initialize();
                     break;
             }
         }
        
-        public void ChangeOnNextLevel()
-        {
-            ++LevelNumber;
-        }
+        // public void ChangeOnNextLevel()
+        // {
+        //     ++LevelNumber;
+        // }
 
         // public void Save(Transform currentPlayerPosition)
         // {
