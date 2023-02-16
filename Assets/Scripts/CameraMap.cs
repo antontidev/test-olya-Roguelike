@@ -1,11 +1,17 @@
-﻿using UnityEngine;
-
+﻿using Services;
+using UnityEngine;
 public class CameraMap : MonoBehaviour
 {
-    public Map.HeroMap Hero;
+    public Transform HeroToFollow;
+    private Vector3 _deltaPos;
 
-    private void Update()
+    public void Start()
     {
-        transform.position = Hero.transform.position;
+        _deltaPos = transform.position - HeroToFollow.position;
+    }
+
+    public void Update()
+    {
+        transform.position = new Vector3(transform.position.x, HeroToFollow.position.y + _deltaPos.y, -10);
     }
 }

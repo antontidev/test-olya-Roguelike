@@ -1,4 +1,5 @@
 using Configs.Enemies;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : Character
@@ -7,17 +8,17 @@ public class Enemy : Character
 
     private GameObject _destroyEnemy;
 
-    // public EnemiesAnimatorConfig EnemiesAnimatorConfig;
-    public EnemiesImagesConfig EnemiesImagesConfigImagesConfig;
     public EnemiesConfig EnemiesConfig;
 
     public override void Start()
     {
+        EnemiesConfig.Initialize();
         _characterStats = RandomSelection();
         
-        var obj = (GameObject)Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
+        var obj = Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
         
-        Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
+        // Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
+        Animator = obj.GameObject().GetComponent<Animator>();
         
         Health = _characterStats.GetMaxHealth();
         CharacterStatusView.SetMaxHealth(Health);

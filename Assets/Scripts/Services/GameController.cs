@@ -22,17 +22,20 @@ namespace Services
             Instance = this;
             
             DontDestroyOnLoad(gameObject);
-            
-            InitializeManager();
 
-            SceneManager.LoadScene(0);
+            var seq = DOTween.Sequence();
+            seq.AppendCallback(InitializeManager)
+                .AppendCallback(() =>
+                {
+                    SceneManager.LoadScene(0);
+                });
+
         }
         
         private void InitializeManager()
         {
             LevelNumber = 0;
             StationID = 0;
-
             transform.position = new Vector3(0, -4, 0);
 
             Save(transform);

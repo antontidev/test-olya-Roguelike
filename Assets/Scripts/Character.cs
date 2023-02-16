@@ -12,6 +12,7 @@ public abstract class Character : MonoBehaviour
 
     protected int Health;
     protected int Defence;
+    
     public bool Died;
 
     public Transform VisualSpawnTransform;

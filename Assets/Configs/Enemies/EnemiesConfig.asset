@@ -24,7 +24,7 @@ MonoBehaviour:
       PermanentBuffDamage: 0
       TemporaryBuffDamage: 0
       SpriteLink: Sprites/Goblin Sprite
-      AnimatorLink: 
+      AnimatorLink: Animation/Enemy Sprite
     Chance: 50
   - CharacterStats:
       InitialMaxHealth: 3
@@ -37,5 +37,5 @@ MonoBehaviour:
       PermanentBuffDamage: 0
       TemporaryBuffDamage: 0
       SpriteLink: Sprites/Scelet Sprite
-      AnimatorLink: 
+      AnimatorLink: Animation/Scelet Sprite
     Chance: 50
