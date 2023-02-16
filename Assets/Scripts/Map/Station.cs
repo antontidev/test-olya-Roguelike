@@ -2,7 +2,6 @@
 using DG.Tweening;
 using Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Map
@@ -27,19 +26,17 @@ namespace Map
         {
             var flag = false;
             foreach (var station in _previousStation)
-                if (station.GetComponent<Station>().ID == _mapController.Hero.StationID) flag = true;
+                if (station.GetComponentInChildren<Station>().ID == _mapController.Hero.StationID) flag = true;
             if (!flag) return;
             
             var sequence = DOTween.Sequence();
             sequence.AppendCallback(MoveHero)
-                .AppendInterval(PathLength)
-                .AppendCallback(DeactivePreviosStation)
+                .AppendInterval(3)
                 .AppendCallback(() =>
                 {
-                    _mapController.Hero.StationID = ID;
-                    GameController.Instance.StationID = _mapController.Hero.StationID;
+                    SaveMap();
+                    DeactivePreviosStation();
                 })
-                .AppendCallback(_mapController.ChangeOnNextLevel)
                 .AppendCallback(Action);
         }
 
@@ -48,11 +45,18 @@ namespace Map
             _mapController.Hero.Move(transform.position, PathLength);
         }
 
+        private void SaveMap()
+        {
+            GameController.Instance.StationID = ID;
+            GameController.Instance.LevelNumber = LevelNumber;
+            GameController.Instance.transform.position = transform.position;
+        }
+
         private void DeactivePreviosStation()
         {
             foreach (var station in _previousStation)
             {
-                if (station.GetComponent<Station>().ID == _mapController.Hero.StationID) 
+                if (station.GetComponentInChildren<Station>().ID == _mapController.Hero.StationID) 
                     station.GetComponent<Button>().enabled = false;
             }
         }

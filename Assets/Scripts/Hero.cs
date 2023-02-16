@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Services;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,12 +7,10 @@ public class Hero : Character {
 
     public override void Start()
     {
-        _characterStats = HeroMap.Heroes[0];
+        _characterStats = GameController.Instance.CharacterStats;
         
         var obj = Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
 
-        // obj.transform.localPosition = Vector3.zero;
-        // Animator = (Animator)Resources.Load(_characterStats.AnimatorLink);
         Animator = obj.GameObject().GetComponent<Animator>();
 
         Health = _characterStats.GetMaxHealth();
@@ -20,10 +19,21 @@ public class Hero : Character {
         SetDefense(_characterStats.GetDefence());
     }
 
-    public override void MakeDamage(int cardDamage)
+    public override void Initialize(BattleController battleController, int initialHand)
+    {
+        Died = false;
+        
+        BattleController = battleController;
+        
+        CardsHand.Initialize(BattleController.CardController, initialHand);
+        
+        StatusCanvas.worldCamera = Camera.main;
+    }
+    
+    public void MakeDamage(int cardDamage, Enemy enemy)
     {
         PlayAnimation(Animation.Attack);
-        BattleController.enemy.GetDamage(_characterStats.GetDamage() * cardDamage);
+        enemy.GetDamage(_characterStats.GetDamage() * cardDamage);
     }
 
     protected override void IsDie()

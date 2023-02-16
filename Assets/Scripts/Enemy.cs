@@ -1,4 +1,5 @@
 using Configs.Enemies;
+using Services;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,6 +10,21 @@ public class Enemy : Character
     private GameObject _destroyEnemy;
 
     public EnemiesConfig EnemiesConfig;
+
+    public DropZone DropZone;
+
+    public override void Initialize(BattleController battleController, int initialHand)
+    {
+        Died = false;
+        
+        BattleController = battleController;
+        
+        DropZone.Initialize(this);
+        
+        CardsHand.Initialize(BattleController.CardController, initialHand);
+        
+        StatusCanvas.worldCamera = Camera.main;
+    }
 
     public override void Start()
     {
@@ -26,10 +42,10 @@ public class Enemy : Character
         SetDefense(_characterStats.GetDefence());
     }
     
-    public override void MakeDamage(int cardDamage)
+    public void MakeDamage(int cardDamage)
     {
         PlayAnimation(Animation.Attack);
-        BattleController.hero.GetDamage(_characterStats.GetDamage() * cardDamage);
+        BattleController.Hero.GetDamage(_characterStats.GetDamage() * cardDamage);
     }
 
     protected override void IsDie()
@@ -37,7 +53,7 @@ public class Enemy : Character
         Died = true;
         PlayAnimation(Animation.Death);
         _destroyEnemy = gameObject;
-        BattleController.enemy = null;
+        BattleController.Enemy = null;
         Destroy(_destroyEnemy);
         BattleController.NextWave();
     }
