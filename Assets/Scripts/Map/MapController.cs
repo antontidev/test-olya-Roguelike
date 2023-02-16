@@ -38,7 +38,9 @@ namespace Map
         public void BuffHeroWithBonuses()
         {
             BonusStats pickedBonus = _shop.CardsRoot.pickedBonus;
+            _shop.CardsRoot.UnSubscribeOnBonusPicked(BuffHeroWithBonuses);
             Hero.HeroStats.BuffStats(pickedBonus);
+            _shop.gameObject.SetActive(false);
         }
     }
 }
