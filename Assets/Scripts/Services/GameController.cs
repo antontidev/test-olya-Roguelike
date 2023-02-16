@@ -14,6 +14,8 @@ namespace Services
         // [HideInInspector]
         public int StationID;
 
+        public CharacterStats CharacterStats;
+
         [HideInInspector]
         public MapController MapController;
 
@@ -37,6 +39,8 @@ namespace Services
             LevelNumber = 0;
             StationID = 0;
             transform.position = new Vector3(0, -4, 0);
+
+            CharacterStats = HeroMap.Heroes[0];
 
             Save(transform);
         }

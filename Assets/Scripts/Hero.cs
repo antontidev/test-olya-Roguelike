@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Services;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class Hero : Character {
 
     public override void Start()
     {
-        _characterStats = HeroMap.Heroes[0];
+        _characterStats = GameController.Instance.CharacterStats;
         
         var obj = Instantiate(Resources.Load(_characterStats.SpriteLink), VisualSpawnTransform, false);
 
