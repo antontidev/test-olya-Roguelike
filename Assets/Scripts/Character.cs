@@ -1,7 +1,6 @@
 using DefaultNamespace;
 using Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Views;
 
 public abstract class Character : MonoBehaviour
@@ -22,17 +21,8 @@ public abstract class Character : MonoBehaviour
     public CardsHand CardsHand;
     
     public BattleController BattleController;
-    public CardController CardController;
-
-    public void Initialize(BattleController battleController, CardController cardController, int initialHand)
-    {
-        Died = false;
-        BattleController = battleController;
-        CardController = cardController;
-        CardsHand.Initialize(CardController, initialHand);
-        StatusCanvas.worldCamera = Camera.main;
-    }
-
+    public abstract void Initialize(BattleController battleController, int initialHand);
+    
     public int GetCountCardsInHand() {
         return CardsHand.GetCountCardsInHand();
     }
@@ -58,8 +48,6 @@ public abstract class Character : MonoBehaviour
             SetDefense(0);
         }
     }
-    public abstract void MakeDamage(int cardDamage);
-
     
     public void AddHealth(int addHealth)
     {

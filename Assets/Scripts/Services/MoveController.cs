@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Services
 {
@@ -10,15 +9,11 @@ namespace Services
         
         private int _countCardInHand;
 
-        private Character CurrentMoveCharacter;
+        // private Character CurrentMoveCharacter;
 
         private CardView _cardViewEnemy;
 
-        public MoveView MoveView;
-        public CameraBlendService CameraBlendService;
-        
-        [FormerlySerializedAs("ButtleController")] [FormerlySerializedAs("GameController")] public BattleController BattleController;
-        public CardController CardController;
+        public BattleController BattleController;
         
         private void Awake() {
             _random = new System.Random();
@@ -26,9 +21,9 @@ namespace Services
 
         public void NextMove()
         {
-            MoveView.SwitchMove();
-            CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
-            if (CurrentMoveCharacter is Enemy) MoveEnemy();
+            BattleController.MoveView.SwitchMove();
+            // CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
+            if (BattleController.CurrentMoveCharacter is Enemy) MoveEnemy();
             else MoveHero();
         }
         
@@ -38,7 +33,7 @@ namespace Services
 
             sequence.AppendCallback(() =>
                 {
-                    CameraBlendService
+                    BattleController.CameraBlendService
                         .StartSequence()
                         .AppendHeroSwitch()
                         .AppendMainSwitch();
@@ -51,13 +46,15 @@ namespace Services
                 });
         }
         
-        public void CardMoveHero(GameObject card)
+        public void CardMoveHero(GameObject card, DropZone dropZone)
         {
-            card.GetComponent<DragDrop>().defaultParent = transform;
+            card.GetComponent<DragDrop>().defaultParent = dropZone.transform;
             var cardView = card.GetComponent<CardView>();
-            CardMove(cardView);
-            MoveView.AddCountOfMoves();
-            CurrentMoveCharacter.GetAndRemoveCardFromHand(cardView.CardIndex);
+            
+            CardMove(cardView.CardStat, dropZone.Character);
+            
+            BattleController.MoveView.AddCountOfMoves();
+            BattleController.CurrentMoveCharacter.GetAndRemoveCardFromHand(cardView.CardIndex);
         }
         
         private void MoveEnemy()
@@ -69,14 +66,14 @@ namespace Services
 
             sequence.AppendCallback(() =>
             {
-                CameraBlendService
+                BattleController.CameraBlendService
                     .StartSequence()
                     .AppendEnemySwitch()
                     .AppendMainSwitch();
             })
                 .AppendInterval(2);
             
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 sequence
                     .AppendInterval(1)
@@ -89,55 +86,55 @@ namespace Services
 
         private void CardMoveEnemy()
         {
-            var numRandomCard = _random.Next(CurrentMoveCharacter.GetCountCardsInHand());
+            var numRandomCard = _random.Next(BattleController.CurrentMoveCharacter.GetCountCardsInHand());
 
-            var cardStats = CurrentMoveCharacter.GetAndRemoveCardFromHand(numRandomCard);
+            var cardStats = BattleController.CurrentMoveCharacter.GetAndRemoveCardFromHand(numRandomCard);
 
-            _cardViewEnemy = CardController.GetAndFillCardView(cardStats);
+            _cardViewEnemy = BattleController.CardController.GetAndFillCardView(cardStats);
             _cardViewEnemy.transform.SetParent(transform);
-        
-            CardMove(_cardViewEnemy);
-            MoveView.AddCountOfMoves();
+
+            CardMove(_cardViewEnemy.CardStat,
+                _cardViewEnemy.CardStat.Damage != 0 ? BattleController.Hero : BattleController.CurrentMoveCharacter);
+            BattleController.MoveView.AddCountOfMoves();
 
             var sequence = DOTween.Sequence();
 
             sequence.AppendInterval(1)
                 .AppendCallback(() =>
                 {
-                    CardController.ReleaseCardView(_cardViewEnemy);
+                    BattleController.CardController.ReleaseCardView(_cardViewEnemy);
                 });
         }
         
         private void СardDistribution()
         {
-            _countCardInHand = CurrentMoveCharacter.GetCountCardsInHand();
-            CurrentMoveCharacter.AddCardsToHand(6 - _countCardInHand);
+            _countCardInHand = BattleController.CurrentMoveCharacter.GetCountCardsInHand();
+            BattleController.CurrentMoveCharacter.AddCardsToHand(6 - _countCardInHand);
         }
 
-        private void CardMove(CardView cardView)
+        private void CardMove(CardStats cardStats, Character character)
         {
-            var cardStats = cardView.CardStat;
-            CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
+            // CurrentMoveCharacter = BattleController.CurrentMoveCharacter;
             if (cardStats.Damage != 0)
-                CurrentMoveCharacter.MakeDamage(cardStats.Damage);
+                character.GetDamage(cardStats.Damage);
             if (cardStats.Heal != 0)
-                CurrentMoveCharacter.AddHealth(cardStats.Heal);
+                character.AddHealth(cardStats.Heal);
             if (cardStats.Defense != 0)
-                CurrentMoveCharacter.AddDefense(cardStats.Defense);
+                character.AddDefense(cardStats.Defense);
             if (cardStats.CountAddCards != 0)
-                CurrentMoveCharacter.AddCardsToHand(cardStats.CountAddCards);
+                character.AddCardsToHand(cardStats.CountAddCards);
         }
 
         public void EnemyIsDie()
         {
-            MoveView.SetToZeroCountOfMove();
+            BattleController.MoveView.SetToZeroCountOfMove();
             СardDistribution();
-            BattleController.enemy.Died = false;
+            BattleController.Enemy[0].Died = false;
         }
 
         private void ActiveCards(bool activeMove)
         {
-            CardController.CardsRootCanvasGroup.blocksRaycasts = activeMove;
+            BattleController.CardController.CardsRootCanvasGroup.blocksRaycasts = activeMove;
 
             float fadeValue;
             if (activeMove)
@@ -149,7 +146,7 @@ namespace Services
                 fadeValue = 0.5f;
             }
 
-            CardController.CardsRootCanvasGroup.DOFade(fadeValue, 0.3f);
+            BattleController.CardController.CardsRootCanvasGroup.DOFade(fadeValue, 0.3f);
         }
     }
 }

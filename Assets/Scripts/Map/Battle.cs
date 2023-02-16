@@ -6,7 +6,7 @@ namespace Map
     {
         protected override void Action()
         {
-            GameController.Instance.StartLevel(transform);
+            GameController.Instance.StartLevel();
         }
     }
 }

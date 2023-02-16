@@ -1,27 +1,28 @@
-﻿using Services;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 public class DropZone : MonoBehaviour, IDropHandler
 {
-    public MoveController MoveController;
-    public MoveView MoveView;
-    [FormerlySerializedAs("ButtleController")] [FormerlySerializedAs("GameController")] public BattleController BattleController;
+    public Character Character;
 
     private GameObject _card;
-
+    
+    public void Initialize(Character enemy)
+    {
+        Character = enemy;
+    }
+    
     public void OnDrop(PointerEventData eventData)
     {
         _card = eventData.pointerDrag;
         if (!_card.GetComponent<DragDrop>()) return;
         
-        MoveController.CardMoveHero(_card);
+        Character.BattleController.MoveController.CardMoveHero(_card, this);
 
-        if (BattleController.enemy.Died) MoveController.EnemyIsDie();
+        // if (_character.Died) _character.BattleController.MoveController.EnemyIsDie();
         
-        if (MoveView.GetCountOfMove() < 3) return;
+        if (Character.BattleController.MoveView.GetCountOfMove() < 3) return;
         
-        MoveController.NextMove();//ход врага
+        Character.BattleController.MoveController.NextMove();//ход врага
     }
 }
